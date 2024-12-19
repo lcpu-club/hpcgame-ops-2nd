@@ -10,7 +10,7 @@ Installation Method: MASS Automatic Install
 
 ### ARM64 Nodes
 
-Operating system: OpenEuler 22.03 SP3
+Operating system: OpenEuler 22.03 SP4
 
 Installation Method: Manual Install
 
