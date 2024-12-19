@@ -48,3 +48,5 @@ __pycache__/
 *.p8
 secret/
 sec.*
+
+/1_os_prep/playbooks/authorized_keys
