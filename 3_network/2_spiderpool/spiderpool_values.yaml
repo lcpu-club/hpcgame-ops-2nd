@@ -1,0 +1,28 @@
+# Reference: https://github.com/spidernet-io/spiderpool/blob/main/charts/spiderpool/values.yaml
+global:
+  clusterDnsDomain: hpc.lcpu.dev
+
+ipam:
+  enableIPv4: true
+  enableIPv6: false
+
+coordinator:
+  enabled: false
+
+multus:
+  enableMultusConfig: true
+  multusCNI:
+    install: true
+
+plugins:
+  installCNI: false
+  installRdmaCNI: false
+  installOvsCNI: false
+  installSriovCNI: false
+  installibSriovCNI: false
+  installIpoibCNI: false
+
+spiderpoolController:
+  replicas: 3
+  nodeSelector:
+    hpc.lcpu.dev/partition: control
