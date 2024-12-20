@@ -6,6 +6,8 @@
 `kubernetes.io/arch`
 `kubernetes.io/os`
 
+`hpc.lcpu.dev/partition` (`control`, `x86`, `gpu80g`, `gpu40g`, `npu`, `arm`)
+
 # Taints for Nodes
 
 `node-role.kubernetes.io/control-plane:NoSchedule`
