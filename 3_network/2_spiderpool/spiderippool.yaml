@@ -1,0 +1,9 @@
+apiVersion: spiderpool.spidernet.io/v2beta1
+kind: SpiderIPPool
+metadata:
+  name: wm2-roce-v4
+spec:
+  # gateway: 172.81.0.1
+  ips:
+    - 10.234.100.2-10.234.199.254
+  subnet: 10.234.0.0/16

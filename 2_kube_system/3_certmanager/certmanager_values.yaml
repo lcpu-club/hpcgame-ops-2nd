@@ -1,12 +1,11 @@
-sources:
-  pci:
-    deviceClassWhitelist:
-      - "0200"
-      - "0300"
-      - "0302"
-    deviceLabelFields:
-      - vendor
-master:
+crds:
+  enabled: true
+tolerations:
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+webhook:
   tolerations:
     - key: node-role.kubernetes.io/master
       operator: Exists
@@ -21,10 +20,7 @@ master:
                 operator: In
                 values:
                   - control
-worker:
-  tolerations: {}
-  nodeSelector: {}
-topologyUpdator:
+cainjector:
   tolerations:
     - key: node-role.kubernetes.io/master
       operator: Exists
@@ -39,7 +35,7 @@ topologyUpdator:
                 operator: In
                 values:
                   - control
-gc:
+startupapicheck:
   tolerations:
     - key: node-role.kubernetes.io/master
       operator: Exists

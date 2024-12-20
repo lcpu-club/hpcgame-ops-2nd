@@ -4,4 +4,4 @@ helm install \
   --namespace cert-manager \
   --create-namespace \
   --version v1.16.1 \
-  --set crds.enabled=true
+  --values "$(echo "$0" | dirname)/certmanager_values.yaml"

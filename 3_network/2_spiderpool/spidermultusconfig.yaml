@@ -1,0 +1,14 @@
+apiVersion: spiderpool.spidernet.io/v2beta1
+kind: SpiderMultusConfig
+metadata:
+  name: wm2-roce
+  namespace: kube-system
+spec:
+  cniType: ipvlan
+  ipvlan:
+    master:
+      - "vxlan0"
+    ippools:
+      ipv4: ["wm2-roce-v4"]
+    enableRdma: true
+    resourceName: rdma.hpc.lcpu.dev/hca_cx5_wm2
