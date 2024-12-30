@@ -5,6 +5,9 @@
 
 192.168.206.1 gateway gateway.hpcgame.lcpu.dev
 
+# Kubernetes VIP
+192.168.206.5 kubernetes.hpc.lcpu.dev
+
 # Storage
 192.168.51.10 storage storage.node.lcpu.dev
 
