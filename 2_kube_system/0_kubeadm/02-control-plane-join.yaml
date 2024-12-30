@@ -59,6 +59,7 @@
       command: kubeadm join --config=/root/join-config.yaml
       when: inventory_hostname != "xcat"
       register: kubeadm_join
+      ignore_errors: yes
 
     - name: Clean up join config file
       file:

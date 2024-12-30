@@ -86,8 +86,8 @@
     - name: Disable SELinux on boot
       command: grubby --update-kernel ALL --args selinux=0
 
-    # - name: Disable firewall
-    #   command: systemctl disable --now firewalld
+    - name: Disable firewall
+      command: systemctl disable --now firewalld
 
     # - name: Reboot the system
     #   reboot:
@@ -146,8 +146,8 @@
     - name: Disable SELinux on boot
       command: grubby --update-kernel ALL --args selinux=0
 
-    # - name: Disable firewall
-    #   command: systemctl disable --now firewalld
+    - name: Disable firewall
+      command: systemctl disable --now firewalld
 
     # - name: Reboot the system
     #   reboot:
