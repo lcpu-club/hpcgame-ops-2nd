@@ -4,7 +4,7 @@
   tasks:
     - name: Copy generate_kubevip_manifests.sh to all nodes
       copy:
-        src: /path/to/generate_kubevip_manifests.sh
+        src: ./generate_kubevip_manifests.sh
         dest: /tmp/generate_kubevip_manifests.sh
         mode: "0755"
 
