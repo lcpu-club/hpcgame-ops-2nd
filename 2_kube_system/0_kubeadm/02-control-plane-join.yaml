@@ -9,8 +9,8 @@
 
     - name: Extract token and CA hash from output
       set_fact:
-        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)')[1] }}"
-        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)')[1] }}"
+        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)', '\\1').first }}"
+        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)', '\\1').first }}"
       when: inventory_hostname == "xcat"
 
     - name: Set facts on all nodes
@@ -27,4 +27,15 @@
         src: ./kubeadm/join-control-plane.yaml.j2
         dest: /root/join-config.yaml
         mode: "0644"
+      when: inventory_hostname != "xcat"
+
+    - name: Join control plane nodes to the cluster
+      command: kubeadm join --config=/root/join-config.yaml
+      when: inventory_hostname != "xcat"
+      register: kubeadm_join
+
+    - name: Clean up join config file
+      file:
+        path: /root/join-config.yaml
+        state: absent
       when: inventory_hostname != "xcat"
