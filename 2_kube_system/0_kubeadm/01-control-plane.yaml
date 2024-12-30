@@ -10,6 +10,7 @@
 
     - name: Generate kube-vip manifest and save it to /etc/kubernetes/manifests/kube-vip.yaml
       shell: |
+        mkdir -p /etc/kubernetes/manifests &&
         bash /tmp/generate_kubevip_manifests.sh | tee /etc/kubernetes/manifests/kube-vip.yaml
 
     - name: Clean up generate_kubevip_manifests.sh
