@@ -41,6 +41,7 @@ certificateValidityPeriod: 8760h0m0s
 certificatesDir: /etc/kubernetes/pki
 clusterName: kubernetes
 controllerManager: {}
+controlPlaneEndpoint: "192.168.206.5:6443"
 dns: {}
 encryptionAlgorithm: RSA-2048
 etcd:

@@ -2,6 +2,21 @@
   hosts: control
   become: yes
   tasks:
+    - name: Copy generate_kubevip_manifests.sh to all nodes
+      copy:
+        src: /path/to/generate_kubevip_manifests.sh
+        dest: /tmp/generate_kubevip_manifests.sh
+        mode: "0755"
+
+    - name: Generate kube-vip manifest and save it to /etc/kubernetes/manifests/kube-vip.yaml
+      shell: |
+        bash /tmp/generate_kubevip_manifests.sh | tee /etc/kubernetes/manifests/kube-vip.yaml
+
+    - name: Clean up generate_kubevip_manifests.sh
+      file:
+        path: /tmp/generate_kubevip_manifests.sh
+        state: absent
+
     - name: Copy kubeadm init configuration file to master node
       copy:
         src: ./kubeadm/init-config.yaml
@@ -10,7 +25,7 @@
       when: inventory_hostname == "xcat"
 
     - name: Initialize Kubernetes master node using the configuration file
-      command: kubeadm init --config=/root/init-config.yaml --control-plane-endpoint "192.168.206.5:6443" --upload-certs
+      command: kubeadm init --config=/root/init-config.yaml --upload-certs
       when: inventory_hostname == "xcat"
       register: kubeadm_init
 
@@ -19,6 +34,12 @@
         content: "{{ kubeadm_init.stdout_lines[-2] }}"
         dest: /tmp/kubeadm_join.sh
         mode: "0755"
+      when: inventory_hostname == "xcat"
+
+    - name: Clean up kubeadm init configuration file
+      file:
+        path: /root/init-config.yaml
+        state: absent
       when: inventory_hostname == "xcat"
 
     - name: Copy kubeadm join command to worker nodes
