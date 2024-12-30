@@ -9,8 +9,8 @@
 
     - name: Extract token and CA hash from output
       set_fact:
-        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)', '\\1').first }}"
-        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)', '\\1').first }}"
+        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)', '\\1') | first }}"
+        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)', '\\1') | first }}"
       when: inventory_hostname == "xcat"
 
     - name: Set facts on all nodes
