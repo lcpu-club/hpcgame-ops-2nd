@@ -52,8 +52,13 @@ npu:
 ### All Nodes ###
 all:
   children:
-    storage:
     control:
+    all_noctrl:
+
+### All Except Control ###
+all_noctrl:
+  children:
+    storage:
     x86_amd:
     # x86: # FIXME: x86 has not been brought up
     arm:
