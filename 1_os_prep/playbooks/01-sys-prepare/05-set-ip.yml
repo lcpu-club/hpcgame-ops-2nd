@@ -1,15 +1,15 @@
 ---
 - name: Configure ens1np0 network interface
-  hosts: group1
+  hosts: x86
   become: yes
-  
+
   tasks:
     - name: Set ip for host
       command: nmcli con mod "System ens1np0" ipv4.addresses {{ hostvars[inventory_hostname].internal_ip }}/24 ipv4.method manual ipv6.method disabled mtu 4500
-    
+
     - name: Bring up the network interface
-      command: nmcli con up "System ens1np0" 
-    
+      command: nmcli con up "System ens1np0"
+
     - name: Get current IP address
       ansible.builtin.command: ip a
       register: ip_output

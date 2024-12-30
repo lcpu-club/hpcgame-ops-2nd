@@ -27,13 +27,17 @@ x86_amd:
 x86:
   hosts:
     l08c49n1:
-      ansible_host: 192.168.50.1
+      ansible_host: 192.168.206.101
+      internal_ip: 192.168.50.1
     l08c49n2:
-      ansible_host: 192.168.50.2
+      ansible_host: 192.168.206.102
+      internal_ip: 192.168.50.2
     l08c49n3:
-      ansible_host: 192.168.50.3
+      ansible_host: 192.168.206.103
+      internal_ip: 192.168.50.3
     l08c49n4:
-      ansible_host: 192.168.50.4
+      ansible_host: 192.168.206.104
+      internal_ip: 192.168.50.4
 
 ### Partition: arm ###
 arm:
@@ -52,7 +56,7 @@ npu:
 all:
   children:
     all_nodes:
-    storage:
+    storage_group:
 
 ### All Nodes ###
 all_nodes:

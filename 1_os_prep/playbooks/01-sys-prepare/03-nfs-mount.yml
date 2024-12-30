@@ -1,5 +1,5 @@
 - name: Mount NFS /cluster from 192.168.206.2
-  hosts: group1
+  hosts: x86
   become: yes
   tasks:
     - name: Install nfs-utils package
@@ -13,7 +13,7 @@
         state: directory
         owner: root
         group: root
-        mode: '0755'
+        mode: "0755"
 
     - name: Mount NFS share
       ansible.builtin.mount:

@@ -1,6 +1,6 @@
 ---
 - name: Copy etc-hosts file to all nodes
-  hosts: group1
+  hosts: all_nodes
   become: true
 
   tasks:
@@ -10,4 +10,4 @@
         dest: /etc/hosts
         owner: root
         group: root
-        mode: '0644'
+        mode: "0644"
