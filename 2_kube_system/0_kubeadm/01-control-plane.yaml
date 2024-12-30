@@ -56,7 +56,7 @@
         state: absent
       when: inventory_hostname == "xcat"
 
-    - name: Extract token and CA hash from output
-      set_fact:
-        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)') }}"
-        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)') }}"
+    # - name: Extract token and CA hash from output
+    #   set_fact:
+    #     kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)') }}"
+    #     kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)') }}"
