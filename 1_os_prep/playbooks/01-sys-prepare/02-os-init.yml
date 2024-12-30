@@ -80,10 +80,10 @@
     #     state: present
 
     - name: Disable SELinux
-      command:
-        - bash
-        - -c
-        - setenforce 0 && grubby --update-kernel ALL --args selinux=0
+      command: setenforce 0
+
+    - name: Disable SELinux on boot
+      command: grubby --update-kernel ALL --args selinux=0
 
     # - name: Disable firewall
     #   command: systemctl disable --now firewalld
@@ -150,10 +150,10 @@
     #     state: present
 
     - name: Disable SELinux
-      command:
-        - bash
-        - -c
-        - setenforce 0 && grubby --update-kernel ALL --args selinux=0
+      command: setenforce 0
+
+    - name: Disable SELinux on boot
+      command: grubby --update-kernel ALL --args selinux=0
 
     # - name: Disable firewall
     #   command: systemctl disable --now firewalld
