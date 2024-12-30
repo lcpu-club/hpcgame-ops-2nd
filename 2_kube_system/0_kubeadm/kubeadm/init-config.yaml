@@ -18,8 +18,8 @@ nodeRegistration:
   name: node
   taints: null
   kubeletExtraArgs:
-    name: node-ip
-    value: 192.168.206.2 # fill in via node: xcat
+    - name: node-ip
+      value: 192.168.206.2 # fill in via node: xcat
 timeouts:
   controlPlaneComponentHealthCheck: 4m0s
   discovery: 5m0s
