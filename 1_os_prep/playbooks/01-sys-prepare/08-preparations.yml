@@ -14,7 +14,7 @@
         regexp: "^[^#].*swap.*"
 
 - name: Ensure IP forwarding is enabled and persisted
-  hosts: all
+  hosts: all_nodes
   become: yes
   tasks:
     - name: Ensure /etc/sysctl.conf contains net.ipv4.ip_forward = 1
