@@ -9,7 +9,7 @@ echo "Detected Interface: $INTERFACE" >&2
 # alias kube-vip="ctr image pull ghcr.io/kube-vip/kube-vip:$KVVERSION; ctr run --rm --net-host ghcr.io/kube-vip/kube-vip:$KVVERSION vip /kube-vip"
 # alias kube-vip="docker run --network host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION"
 
-ctr images pull ghcr.io/kube-vip/kube-vip:$KVVERSION
+ctr images pull ghcr.io/kube-vip/kube-vip:$KVVERSION 2>/dev/null 1>/dev/null
 
 function kube-vip()
 {
