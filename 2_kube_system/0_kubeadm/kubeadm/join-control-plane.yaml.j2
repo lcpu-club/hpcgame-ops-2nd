@@ -5,7 +5,7 @@ discovery:
     apiServerEndpoint: 192.168.206.5:6443
     token: {{ kubeadm_join_token }}
     caCertHashes:
-      - sha256: {{ kubeadm_join_ca_hash }}
+      - {{ kubeadm_join_ca_hash }}
   tlsBootstrapToken: {{ kubeadm_join_token }}
 kind: JoinConfiguration
 nodeRegistration:
