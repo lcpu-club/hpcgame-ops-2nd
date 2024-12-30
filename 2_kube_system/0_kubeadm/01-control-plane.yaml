@@ -44,7 +44,7 @@
 
     - name: Save kubeadm join command
       copy:
-        content: "{{ kubeadm_init.stdout_lines[-2] }}"
+        content: "{{ kubeadm_init.stdout_lines[-2] ~ '\n' ~ kubeadm_init.stdout_lines[-1] }}"
         dest: /tmp/kubeadm_join.sh
         mode: "0755"
       when: inventory_hostname == "xcat"
@@ -55,9 +55,7 @@
         state: absent
       when: inventory_hostname == "xcat"
 
-    - name: Copy kubeadm join command to worker nodes
-      copy:
-        src: /tmp/kubeadm_join.sh
-        dest: /tmp/kubeadm_join.sh
-        mode: "0755"
-      when: inventory_hostname != "xcat"
+    - name: Extract token and CA hash from output
+      set_fact:
+        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)') }}"
+        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)') }}"

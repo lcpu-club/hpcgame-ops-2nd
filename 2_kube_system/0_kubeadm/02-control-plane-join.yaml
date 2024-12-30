@@ -1,0 +1,20 @@
+- name: Bootstrap Kubernetes control-plane using kubeadm
+  hosts: control
+  become: yes
+  tasks:
+    - name: Generate join token
+      command: kubeadm token create --print-join-command
+      register: kubeadm_init
+      when: inventory_hostname == "xcat"
+
+    - name: Extract token and CA hash from output
+      set_fact:
+        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)') }}"
+        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)') }}"
+      when: inventory_hostname == "xcat"
+
+    - name: Copy join config file to all control plane nodes
+      template:
+        src: ./kubeadm/join-control-plane.yaml.j2
+        dest: /root/join-config.yaml
+        mode: "0644"
