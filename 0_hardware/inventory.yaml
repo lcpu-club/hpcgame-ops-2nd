@@ -55,6 +55,6 @@ all:
     storage:
     control:
     x86_amd:
-    x86:
+    # x86: # FIXME: x86 has not been brought up
     arm:
     npu:
