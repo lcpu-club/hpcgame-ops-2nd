@@ -16,10 +16,10 @@ nodeRegistration:
   kubeletExtraArgs:
     - name: node-ip
       value: {{ ansible_host }}
-localAPIEndpoint:
-  advertiseAddress: {{ ansible_host }}
 controlPlane:
   certificateKey: {{ kubeadm_join_cert_key }}
+  localAPIEndpoint:
+    advertiseAddress: {{ ansible_host }}
 timeouts:
   controlPlaneComponentHealthCheck: 4m0s
   discovery: 5m0s
