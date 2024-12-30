@@ -15,7 +15,8 @@ nodeRegistration:
   taints: null # Add according to node role
 timeouts:
   kubeletExtraArgs:
-    node-ip: 192.168.206.xxx # TODO: fill in via node
+    - name: node-ip
+      value: 192.168.206.xxx # TODO: fill in via node
   controlPlaneComponentHealthCheck: 4m0s
   discovery: 5m0s
   etcdAPICall: 2m0s
