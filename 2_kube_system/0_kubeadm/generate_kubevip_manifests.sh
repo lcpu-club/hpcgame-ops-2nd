@@ -4,6 +4,8 @@ INTERFACE="$(ip a | grep $SUBNET_PREFIX | awk '{ print $NF }')"
 # KVVERSION=$(curl -sL https://api.github.com/repos/kube-vip/kube-vip/releases | jq -r ".[0].name")
 KVVERSION=v0.8.7
 
+echo "Detected Interface: $INTERFACE" >&2
+
 # alias kube-vip="ctr image pull ghcr.io/kube-vip/kube-vip:$KVVERSION; ctr run --rm --net-host ghcr.io/kube-vip/kube-vip:$KVVERSION vip /kube-vip"
 # alias kube-vip="docker run --network host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION"
 
