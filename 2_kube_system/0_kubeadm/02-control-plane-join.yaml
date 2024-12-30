@@ -2,6 +2,24 @@
   hosts: control
   become: yes
   tasks:
+    - name: Copy generate_kubevip_manifests.sh to all nodes
+      copy:
+        src: ./generate_kubevip_manifests.sh
+        dest: /tmp/generate_kubevip_manifests.sh
+        mode: "0755"
+      when: inventory_hostname != "xcat"
+
+    - name: Generate kube-vip manifest and save it to /etc/kubernetes/manifests/kube-vip.yaml
+      shell: |
+        bash /tmp/generate_kubevip_manifests.sh | tee /etc/kubernetes/manifests/kube-vip.yaml
+      when: inventory_hostname != "xcat"
+
+    - name: Clean up generate_kubevip_manifests.sh
+      file:
+        path: /tmp/generate_kubevip_manifests.sh
+        state: absent
+      when: inventory_hostname != "xcat"
+
     - name: Generate join token
       command: kubeadm token create --print-join-command
       register: kubeadm_init
