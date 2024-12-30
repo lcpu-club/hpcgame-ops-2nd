@@ -1,0 +1,23 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: wm2-roce
+  namespace: kube-system
+spec:
+  config: |
+    {
+      "name": "wm2-roce-network",
+      "cniVersion": "0.3.1",
+      "plugins": [
+        {
+          "type": "ipvlan",
+          "master": "vxlan0",
+          "mode": "l2",
+          "linkInContainer": false,
+          "ipam": {
+            "type": "whereabouts",
+            "range": "10.234.4.0/22"
+          }
+        }
+      ]
+    }

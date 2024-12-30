@@ -7,7 +7,7 @@ ipam:
   enableIPv6: false
 
 coordinator:
-  enabled: false
+  enabled: true
 
 multus:
   enableMultusConfig: true

@@ -50,3 +50,5 @@ secret/
 sec.*
 
 /1_os_prep/playbooks/01-sys-prepare/authorized_keys
+
+dev-test/
