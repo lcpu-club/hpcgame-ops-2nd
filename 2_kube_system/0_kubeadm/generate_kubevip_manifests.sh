@@ -9,6 +9,8 @@ echo "Detected Interface: $INTERFACE" >&2
 # alias kube-vip="ctr image pull ghcr.io/kube-vip/kube-vip:$KVVERSION; ctr run --rm --net-host ghcr.io/kube-vip/kube-vip:$KVVERSION vip /kube-vip"
 # alias kube-vip="docker run --network host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION"
 
+ctr images pull ghcr.io/kube-vip/kube-vip:$KVVERSION
+
 function kube-vip()
 {
     ctr run --net-host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION "kube-vip-cli-$(openssl rand -hex 4)" /kube-vip "$@"
