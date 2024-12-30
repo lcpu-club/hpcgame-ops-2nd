@@ -3,6 +3,11 @@
   hosts: all_nodes
   become: true
   tasks:
+    - name: Install containerd gpg Key
+      rpm_key:
+        key: https://mirrors.pku.edu.cn/docker-ce/linux/rhel/gpg
+        state: present
+
     - name: Download containerd.io RPM
       get_url:
         url: https://mirrors.pku.edu.cn/docker-ce/linux/rhel/9.4/x86_64/stable/Packages/containerd.io-1.7.24-3.1.el9.x86_64.rpm
@@ -59,10 +64,10 @@
         content: |
           [kubernetes]
           name=Kubernetes
-          baseurl=https://pkgs.k8s.io/core:/stable:/v1.32/rpm/
+          baseurl=https://mirrors.pku.edu.cn/kubernetes/core:/stable:/v1.32/rpm/
           enabled=1
           gpgcheck=1
-          gpgkey=https://pkgs.k8s.io/core:/stable:/v1.32/rpm/repodata/repomd.xml.key
+          gpgkey=https://mirrors.pku.edu.cn/kubernetes/core:/stable:/v1.32/rpm/repodata/repomd.xml.key
           exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
 
     - name: Install Kubernetes packages
