@@ -1,0 +1,50 @@
+apiVersion: hpcgame.pku.edu.cn/v1alpha1
+kind: Problem
+metadata:
+  name: test-problem
+  contest: hpcgame-2nd
+spec:
+  title: Test Problem
+  description: |
+    Hello world, my tiny problem
+
+    ## Example Program
+
+    ```cpp
+    int main() {}
+    ```
+  attachments:
+    - name: Handout
+      type: archive # Type can be archive, files, file, image, video, audio
+      path: ./handout/
+      parameters: # [Optional] parameters for the type driver
+        archiveType: zip
+  datasets:
+    - name: data
+      path: ./data/
+  pipelines:
+    include:
+      - ./pipelines/judge.yaml
+    build:
+      steps:
+        - name: build fetched
+          datasets:
+            - name: data
+              mountPath: /data
+          sharedVolumes:
+            - name: shared
+              mountPath: /shared
+              storageClass: lustre-wm2
+          jobTemplate:
+            spec:
+              containers:
+                - image: crmirror.lcpu.dev/hpcgame/test_problem:latest
+                  imagePullPolicy: IfNotPresent
+        - name: artifact
+          jobTemplate:
+            spec:
+              containers:
+                - image: crmirror.lcpu.dev/hpcgame/artifact:latest
+                  env:
+                    - name: ARTIFACT_PATH
+                      value: /shared/artifact
