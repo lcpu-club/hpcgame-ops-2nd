@@ -7,16 +7,23 @@
       register: kubeadm_init
       when: inventory_hostname == "xcat"
 
+    - name: Upload certs and get join cert key
+      command: kubeadm init phase upload-certs --upload-certs
+      register: kubeadm_upload_certs
+      when: inventory_hostname == "xcat"
+
     - name: Extract token and CA hash from output
       set_fact:
         kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)', '\\1') | first }}"
         kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)', '\\1') | first }}"
+        kubeadm_join_cert_key: "{{ kubeadm_upload_certs.stdout_lines[-1] }}"
       when: inventory_hostname == "xcat"
 
     - name: Set facts on all nodes
       set_fact:
         kubeadm_join_token: "{{ kubeadm_join_token }}"
         kubeadm_join_ca_hash: "{{ kubeadm_join_ca_hash }}"
+        kubeadm_join_cert_key: "{{ kubeadm_join_cert_key }}"
       delegate_to: "{{ item }}"
       delegate_facts: yes
       with_items: "{{ groups['control'] }}"

@@ -13,10 +13,10 @@ nodeRegistration:
   imagePullSerial: true
   # name: {{ node_hostname }}
   taints: null # Add according to node role
-timeouts:
   kubeletExtraArgs:
     - name: node-ip
       value: 192.168.206.xxx # TODO: fill in via node
+timeouts:
   controlPlaneComponentHealthCheck: 4m0s
   discovery: 5m0s
   etcdAPICall: 2m0s

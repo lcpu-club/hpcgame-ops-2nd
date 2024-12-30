@@ -13,11 +13,12 @@ nodeRegistration:
   imagePullPolicy: IfNotPresent
   imagePullSerial: true
   name: {{ inventory_hostname }}
-  taints: null # Add according to node role
-timeouts:
   kubeletExtraArgs:
     - name: node-ip
       value: {{ ansible_host }}
+controlPlane:
+  certificateKey: {{ kubeadm_join_cert_key }}
+timeouts:
   controlPlaneComponentHealthCheck: 4m0s
   discovery: 5m0s
   etcdAPICall: 2m0s
