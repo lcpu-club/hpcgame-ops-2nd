@@ -1,6 +1,6 @@
 ---
 ### Storage ###
-storage:
+storage_group:
   hosts:
     storage:
       ansible_host: 192.168.51.10
@@ -58,7 +58,6 @@ all:
 ### All Except Control ###
 all_noctrl:
   children:
-    storage:
     x86_amd:
     # x86: # FIXME: x86 has not been brought up
     arm:
