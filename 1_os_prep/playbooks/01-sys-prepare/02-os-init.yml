@@ -81,6 +81,7 @@
 
     - name: Disable SELinux
       command: setenforce 0
+      ignore_errors: true
 
     - name: Disable SELinux on boot
       command: grubby --update-kernel ALL --args selinux=0
@@ -140,6 +141,7 @@
 
     - name: Disable SELinux
       command: setenforce 0
+      ignore_errors: true
 
     - name: Disable SELinux on boot
       command: grubby --update-kernel ALL --args selinux=0

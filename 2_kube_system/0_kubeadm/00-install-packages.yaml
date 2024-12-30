@@ -1,0 +1,81 @@
+---
+- name: Install and configure Kubernetes
+  hosts: all_nodes
+  become: true
+  tasks:
+    - name: Download containerd.io RPM
+      get_url:
+        url: https://mirrors.pku.edu.cn/docker-ce/linux/rhel/9.4/x86_64/stable/Packages/containerd.io-1.7.24-3.1.el9.x86_64.rpm
+        dest: /tmp/containerd.io-1.7.24-3.1.el9.x86_64.rpm
+      when: ansible_architecture == "x86_64"
+
+    - name: Install containerd.io RPM
+      dnf:
+        name: /tmp/containerd.io-1.7.24-3.1.el9.x86_64.rpm
+        state: present
+      when: ansible_architecture == "x86_64"
+
+    - name: Remove containerd.io RPM file
+      file:
+        path: /tmp/containerd.io-1.7.24-3.1.el9.x86_64.rpm
+        state: absent
+      when: ansible_architecture == "x86_64"
+
+    - name: Install containerd.io Packages
+      dnf:
+        name:
+          - containerd
+        state: present
+      when: ansible_architecture == "aarch64"
+
+    - name: Enable and start containerd service
+      systemd:
+        name: containerd
+        enabled: yes
+        state: started
+
+    - name: Configure crictl.yaml
+      copy:
+        dest: /etc/crictl.yaml
+        content: |
+          runtime-endpoint: "unix:///run/containerd/containerd.sock"
+          timeout: 0
+          debug: false
+
+    - name: Copy containerd config.toml
+      copy:
+        src: "{{ playbook_dir }}/containerd/config.toml"
+        dest: /etc/containerd/config.toml
+        force: yes
+
+    - name: Restart containerd service
+      systemd:
+        name: containerd
+        state: restarted
+
+    - name: Add Kubernetes repository
+      copy:
+        dest: /etc/yum.repos.d/kubernetes.repo
+        content: |
+          [kubernetes]
+          name=Kubernetes
+          baseurl=https://pkgs.k8s.io/core:/stable:/v1.32/rpm/
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://pkgs.k8s.io/core:/stable:/v1.32/rpm/repodata/repomd.xml.key
+          exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
+
+    - name: Install Kubernetes packages
+      dnf:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        disable_excludes: kubernetes
+        state: present
+
+    - name: Enable and start kubelet service
+      systemd:
+        name: kubelet
+        enabled: yes
+        state: started
