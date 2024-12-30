@@ -19,7 +19,6 @@
         name:
           - containerd
         state: present
-      when: ansible_architecture == "aarch64"
 
     - name: Enable and start containerd service
       systemd:

@@ -9,7 +9,7 @@ KVVERSION=v0.8.7
 
 function kube-vip()
 {
-    docker run --network host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION "$@"
+    ctr run --net-host --rm ghcr.io/kube-vip/kube-vip:$KVVERSION "kube-vip-cli-$(openssl rand -hex 4)" /kube-vip "$@"
 }
 
 kube-vip manifest pod \
