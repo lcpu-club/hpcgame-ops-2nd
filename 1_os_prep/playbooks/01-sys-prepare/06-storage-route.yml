@@ -1,0 +1,10 @@
+---
+- name: Configure static route with nmcli command
+  hosts: group1
+  become: yes
+  tasks:
+    - name: Add static route
+      command: nmcli connection modify "System ens1np0" +ipv4.routes "192.168.51.0/24 192.168.50.254"
+      
+    - name: Restart network connection
+      command: nmcli connection up "System ens1np0"

@@ -1,0 +1,32 @@
+- name: Mount NFS /cluster from 192.168.206.2
+  hosts: group1
+  become: yes
+  tasks:
+    - name: Install nfs-utils package
+      ansible.builtin.package:
+        name: nfs-utils
+        state: present
+
+    - name: Create mount point directory
+      ansible.builtin.file:
+        path: /cluster
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Mount NFS share
+      ansible.builtin.mount:
+        path: /cluster
+        src: 192.168.206.2:/cluster
+        fstype: nfs
+        state: mounted
+        opts: defaults
+
+    - name: Ensure NFS share is added to /etc/fstab
+      ansible.builtin.mount:
+        path: /cluster
+        src: 192.168.206.2:/cluster
+        fstype: nfs
+        state: present
+        opts: defaults

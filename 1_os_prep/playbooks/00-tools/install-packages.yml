@@ -1,0 +1,11 @@
+---
+- name: Install specified packages
+  hosts: all
+  become: yes
+  vars:
+    packages: "{{ package_list }}"
+  tasks:
+    - name: Install packages
+      dnf:
+        name: "{{ packages }}"
+        state: present

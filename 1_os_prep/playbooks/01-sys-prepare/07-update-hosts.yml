@@ -1,0 +1,13 @@
+---
+- name: Copy etc-hosts file to all nodes
+  hosts: group1
+  become: true
+
+  tasks:
+    - name: Copy the ./etc-hosts file to /etc/hosts on all nodes
+      copy:
+        src: ./etc-hosts
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: '0644'

@@ -1,0 +1,21 @@
+- name: Install MLNX_OFED_LINUX
+  hosts: group1
+  become: yes
+  tasks:
+    - name: Install required packages
+      ansible.builtin.package:
+        name:
+          - perl
+          - perl-sigtrap
+          - tk
+          - createrepo
+          - kernel-rpm-macros
+          - kernel-devel
+          - pciutils
+          - lsof
+        state: present
+
+    - name: Install MLNX_OFED_LINUX with specified options
+      ansible.builtin.command:
+        cmd: ./mlnxofedinstall --all --with-nfsrdma --without-ucx --without-openmpi --force --enable-mlnx_tune
+        chdir: /cluster/MLNX_OFED_LINUX-24.10-1.1.4.0-rhel9.5-x86_64

@@ -1,0 +1,4 @@
+qemu-kvm
+libnl3-devel
+bridge-utils
+wget
