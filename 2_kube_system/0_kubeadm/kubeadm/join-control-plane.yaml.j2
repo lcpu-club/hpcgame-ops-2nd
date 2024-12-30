@@ -6,7 +6,7 @@ discovery:
     token: {{ kubeadm_join_token }}
     caCertHashes:
       - sha256: {{ kubeadm_join_ca_hash }}
-  tlsBootstrapToken: abcdef.0123456789abcdef
+  tlsBootstrapToken: {{ kubeadm_join_token }}
 kind: JoinConfiguration
 nodeRegistration:
   criSocket: unix:///var/run/containerd/containerd.sock
