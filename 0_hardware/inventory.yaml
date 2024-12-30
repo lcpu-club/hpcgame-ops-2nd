@@ -49,8 +49,13 @@ npu:
     pku-arm-c01:
       ansible_host: 192.168.207.201
 
-### All Nodes ###
 all:
+  children:
+    all_nodes:
+    storage:
+
+### All Nodes ###
+all_nodes:
   children:
     control:
     all_noctrl:

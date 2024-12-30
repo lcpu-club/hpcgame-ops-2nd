@@ -1,6 +1,6 @@
 ---
-- name: User Management and SSH Key Setup
-  hosts: group1
+- name: User Management and SSH Key Setup - Remove Rocky User
+  hosts: x86
   remote_user: cloud-user
   become: yes
   tasks:
@@ -15,11 +15,14 @@
         path: /home/rocky
         state: absent
 
+- name: User Management and SSH Key Setup - Copy SSH Key
+  hosts: all_nodes
+  tasks:
     - name: Ensure .ssh directory exists in root's home
       file:
         path: /root/.ssh
         state: directory
-        mode: '0700'
+        mode: "0700"
         owner: root
         group: root
 
@@ -27,6 +30,6 @@
       copy:
         src: ./authorized_keys
         dest: /root/.ssh/authorized_keys
-        mode: '0600'
+        mode: "0600"
         owner: root
         group: root

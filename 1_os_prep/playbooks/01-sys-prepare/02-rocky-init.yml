@@ -1,14 +1,14 @@
 ---
 - name: Configure Rocky Linux Repositories and Install Packages
-  hosts: group1
-  become: yes
+  hosts: ["control", "x86"]
+  become: true
 
   tasks:
     - name: Comment out mirrorlist and set baseurl for rocky-extras.repo and rocky.repo
       lineinfile:
         path: "{{ item }}"
-        regexp: '^mirrorlist='
-        line: '#mirrorlist='
+        regexp: "^mirrorlist="
+        line: "#mirrorlist="
         backrefs: yes
       with_items:
         - /etc/yum.repos.d/rocky-extras.repo
@@ -17,7 +17,7 @@
       replace:
         path: "{{ item }}"
         regexp: '^#baseurl=http://dl.rockylinux.org/\$contentdir'
-        replace: 'baseurl=https://mirrors.pku.edu.cn/rocky'
+        replace: "baseurl=https://mirrors.pku.edu.cn/rocky"
       with_items:
         - /etc/yum.repos.d/rocky-extras.repo
         - /etc/yum.repos.d/rocky.repo
@@ -41,23 +41,23 @@
     - name: Comment out metalink and set baseurl for epel.repo
       lineinfile:
         path: /etc/yum.repos.d/epel.repo
-        regexp: '^metalink='
-        line: '#metalink='
+        regexp: "^metalink="
+        line: "#metalink="
         backrefs: yes
     - name: Set baseurl for epel.repo from fedoraproject.org
       replace:
         path: /etc/yum.repos.d/epel.repo
-        regexp: '^#baseurl=https?://download.fedoraproject.org/pub/epel/'
-        replace: 'baseurl=https://mirrors.pku.edu.cn/epel/'
+        regexp: "^#baseurl=https?://download.fedoraproject.org/pub/epel/"
+        replace: "baseurl=https://mirrors.pku.edu.cn/epel/"
     - name: Set baseurl for epel.repo from example.com
       replace:
         path: /etc/yum.repos.d/epel.repo
-        regexp: '^#baseurl=https?://download.example/pub/epel/'
-        replace: 'baseurl=https://mirrors.pku.edu.cn/epel/'
+        regexp: "^#baseurl=https?://download.example/pub/epel/"
+        replace: "baseurl=https://mirrors.pku.edu.cn/epel/"
 
     - name: Update all packages
       dnf:
-        name: '*'
+        name: "*"
         state: latest
 
     - name: Install common packages
