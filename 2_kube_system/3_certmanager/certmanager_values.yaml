@@ -13,7 +13,7 @@ webhook:
       operator: Exists
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
               - key: hpc.lcpu.dev/partition
@@ -28,7 +28,7 @@ cainjector:
       operator: Exists
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
               - key: hpc.lcpu.dev/partition
@@ -43,7 +43,7 @@ startupapicheck:
       operator: Exists
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
               - key: hpc.lcpu.dev/partition

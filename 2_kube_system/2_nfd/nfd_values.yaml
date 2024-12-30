@@ -14,16 +14,16 @@ master:
       operator: Exists
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
               - key: hpc.lcpu.dev/partition
                 operator: In
                 values:
                   - control
-worker:
-  tolerations: {}
-  nodeSelector: {}
+# worker:
+#   tolerations: []
+#   nodeSelector: {}
 topologyUpdator:
   tolerations:
     - key: node-role.kubernetes.io/master
@@ -32,7 +32,7 @@ topologyUpdator:
       operator: Exists
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
               - key: hpc.lcpu.dev/partition
@@ -47,7 +47,7 @@ gc:
       operator: Exists
   affinity:
     nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
+      requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
           - matchExpressions:
               - key: hpc.lcpu.dev/partition
