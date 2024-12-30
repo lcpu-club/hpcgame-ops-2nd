@@ -22,6 +22,5 @@ kube-vip manifest pod \
     --controlplane \
     --arp \
     --leaderElection \
-    --enableNodeLabeling \
-    | sed "s#path: /etc/kubernetes/super-admin.conf#path: /etc/kubernetes/admin.conf#g" # Fixes: https://www.cnblogs.com/shangmo/p/18441715
+    --enableNodeLabeling
     # --services not included

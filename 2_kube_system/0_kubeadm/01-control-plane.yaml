@@ -17,6 +17,13 @@
         path: /tmp/generate_kubevip_manifests.sh
         state: absent
 
+    # Used as a workaround for issue <https://github.com/kube-vip/kube-vip/issues/684>
+    - name: Use super-admin on master node
+      shell: |
+        sed -i 's#path: /etc/kubernetes/admin.conf#path: /etc/kubernetes/super-admin.conf#' \
+          /etc/kubernetes/manifests/kube-vip.yaml
+      when: inventory_hostname == "xcat"
+
     - name: Copy kubeadm init configuration file to master node
       copy:
         src: ./kubeadm/init-config.yaml
@@ -28,6 +35,12 @@
       command: kubeadm init --config=/root/init-config.yaml --upload-certs
       when: inventory_hostname == "xcat"
       register: kubeadm_init
+
+    - name: Revert kube-vip to use admin on master node
+      shell: |
+        sed -i 's#path: /etc/kubernetes/super-admin.conf#path: /etc/kubernetes/admin.conf#' \
+          /etc/kubernetes/manifests/kube-vip.yaml && systemctl restart kubelet
+      when: inventory_hostname == "xcat"
 
     - name: Save kubeadm join command
       copy:
