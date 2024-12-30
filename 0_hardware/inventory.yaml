@@ -1,0 +1,60 @@
+---
+### Storage ###
+storage:
+  hosts:
+    storage:
+      ansible_host: 192.168.51.10
+
+### Partition: control ###
+control:
+  hosts:
+    xcat:
+      ansible_host: 192.168.206.2
+    control2:
+      ansible_host: 192.168.206.129
+    control3:
+      ansible_host: 192.168.206.128
+
+### Partition: x86_amd ###
+x86_amd:
+  hosts:
+    sc2:
+      ansible_host: 192.168.208.2
+    sc4:
+      ansible_host: 192.168.208.4
+
+### Partition: x86 ###
+x86:
+  hosts:
+    l08c49n1:
+      ansible_host: 192.168.50.1
+    l08c49n2:
+      ansible_host: 192.168.50.2
+    l08c49n3:
+      ansible_host: 192.168.50.3
+    l08c49n4:
+      ansible_host: 192.168.50.4
+
+### Partition: arm ###
+arm:
+  hosts:
+    pku-arm-a01:
+      ansible_host: 192.168.207.101
+    pku-arm-a02:
+      ansible_host: 192.168.207.102
+
+### Partition: npu ###
+npu:
+  hosts:
+    pku-arm-c01:
+      ansible_host: 192.168.207.201
+
+### All Nodes ###
+all:
+  children:
+    storage:
+    control:
+    x86_amd:
+    x86:
+    arm:
+    npu:

@@ -6,7 +6,7 @@
 `kubernetes.io/arch`
 `kubernetes.io/os`
 
-`hpc.lcpu.dev/partition` (`control`, `x86`, `gpu80g`, `gpu40g`, `npu`, `arm`)
+`hpc.lcpu.dev/partition` (`control`, `x86`, `x86_amd`, `gpu80g`, `gpu40g`, `npu`, `arm`)
 
 `hpc.lcpu.dev/lustre-capable`: (`true`, `false`)
 
