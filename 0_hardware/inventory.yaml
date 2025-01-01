@@ -3,7 +3,7 @@
 storage_group:
   hosts:
     storage:
-      ansible_host: 192.168.51.10
+      ansible_host: 192.168.206.10
 
 ### Partition: control ###
 control:
