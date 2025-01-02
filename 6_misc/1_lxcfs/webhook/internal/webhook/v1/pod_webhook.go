@@ -86,6 +86,13 @@ func (d *PodCustomDefaulter) Default(ctx context.Context, obj runtime.Object) er
 		return nil
 	}
 
+	// Avoid multiple injections
+	for i := range pod.Spec.Volumes {
+		if pod.Spec.Volumes[i].Name == "lxcfs-proc-cpuinfo" {
+			return nil
+		}
+	}
+
 	pod.Spec.Volumes = append(pod.Spec.Volumes, []corev1.Volume{
 		{
 			Name: "lxcfs-proc-cpuinfo",

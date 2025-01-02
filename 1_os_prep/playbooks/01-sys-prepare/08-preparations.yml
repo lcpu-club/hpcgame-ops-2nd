@@ -1,5 +1,5 @@
 - name: Disable swap
-  hosts: all_nodes
+  hosts: all_noctrl
   become: true
 
   tasks:
@@ -30,3 +30,30 @@
         value: "1"
         state: present
         reload: yes
+
+- name: Ensure SWAP is enabled and persisted on control nodes
+  tasks:
+    - name: Check if SWAP is already enabled
+      command: swapon --show
+      register: swap_status
+      ignore_errors: yes
+
+    - name: Enable SWAP if not already enabled
+      command: swapon /dev/mapper/rl-swap
+      when: swap_status.stdout_lines == ""
+
+    - name: Ensure SWAP is persisted in /etc/fstab
+      lineinfile:
+        path: /etc/fstab
+        line: "/dev/mapper/rl-swap none swap sw 0 0"
+        create: yes
+      when: swap_status.stdout_lines == ""
+
+    - name: Verify SWAP is enabled
+      command: swapon --show
+      register: swap_verify
+      changed_when: false
+
+    - name: Debug SWAP status
+      debug:
+        var: swap_verify.stdout_lines

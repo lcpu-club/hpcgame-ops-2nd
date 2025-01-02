@@ -3,16 +3,5 @@
   hosts: all_nodes
   become: yes
   tasks:
-    - name: Check if the image exists
-      shell: crictl images -q {{ image_name }}
-      register: image_exists
-      ignore_errors: yes
-
     - name: Delete the image if it exists
       shell: crictl rmi {{ image_name }}
-      when: image_exists.rc == 0
-
-    - name: Print message if image does not exist
-      debug:
-        msg: "The image {{ image_name }} does not exist on this node."
-      when: image_exists.rc != 0
