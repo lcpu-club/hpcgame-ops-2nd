@@ -4,6 +4,13 @@
   become: true
 
   tasks:
+    - name: Ensure lines containing 'maas' in /etc/yum.conf are commented out
+      lineinfile:
+        path: /etc/yum.conf
+        regexp: '^(?!\s*#).*maas'
+        line: '#\1'
+        backrefs: yes
+
     - name: Comment out mirrorlist and set baseurl for rocky-extras.repo and rocky.repo
       lineinfile:
         path: "{{ item }}"
