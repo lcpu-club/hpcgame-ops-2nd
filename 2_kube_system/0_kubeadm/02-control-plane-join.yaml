@@ -48,6 +48,20 @@
       with_items: "{{ groups['control'] }}"
       when: inventory_hostname == "xcat"
 
+    - name: Ensure kubeadm patches
+      file:
+        path: /root/kubeadm-patches
+        state: directory
+        mode: "0755"
+      when: inventory_hostname != "xcat"
+
+    - name: Insert kubeletconfiguration patch
+      template:
+        src: ./kubeadm/kubeletconfiguration0+strategy.yaml.j2
+        dest: /root/kubeadm-patches/kubeletconfiguration0+strategy.yaml
+        mode: "0644"
+      when: inventory_hostname != "xcat"
+
     - name: Copy join config file to all control plane nodes
       template:
         src: ./kubeadm/join-control-plane.yaml.j2
@@ -64,5 +78,11 @@
     - name: Clean up join config file
       file:
         path: /root/join-config.yaml
+        state: absent
+      when: inventory_hostname != "xcat"
+
+    - name: Clean up kubeadm patches
+      file:
+        path: /root/kubeadm-patches
         state: absent
       when: inventory_hostname != "xcat"

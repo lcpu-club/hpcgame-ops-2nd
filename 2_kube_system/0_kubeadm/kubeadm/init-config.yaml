@@ -8,6 +8,8 @@ apiVersion: kubeadm.k8s.io/v1beta4
 #       - signing
 #       - authentication
 kind: InitConfiguration
+patches:
+  directory: /root/kubeadm-patches
 localAPIEndpoint:
   advertiseAddress: 192.168.206.2
 #   bindPort: 6443
@@ -98,9 +100,7 @@ logging:
     text:
       infoBufferSize: "0"
   verbosity: 0
-failSwapOn: false
-memorySwap:
-  swapBehavior: LimitedSwap
+memorySwap: {}
 nodeStatusReportFrequency: 0s
 nodeStatusUpdateFrequency: 0s
 rotateCertificates: true

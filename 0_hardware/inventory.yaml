@@ -14,6 +14,11 @@ control:
       ansible_host: 192.168.206.129
     control3:
       ansible_host: 192.168.206.128
+  vars:
+    extra_kubelet_config: |
+      failSwapOn: false
+      memorySwap:
+        swapBehavior: LimitedSwap
 
 ### Partition: x86_amd ###
 x86_amd:

@@ -18,6 +18,18 @@
         path: /tmp/generate_kubevip_manifests.sh
         state: absent
 
+    - name: Ensure kubeadm patches
+      file:
+        path: /root/kubeadm-patches
+        state: directory
+        mode: "0755"
+
+    - name: Insert kubeletconfiguration patch
+      template:
+        src: ./kubeadm/kubeletconfiguration0+strategy.yaml.j2
+        dest: /root/kubeadm-patches/kubeletconfiguration0+strategy.yaml
+        mode: "0644"
+
     # Used as a workaround for issue <https://github.com/kube-vip/kube-vip/issues/684>
     - name: Use super-admin on master node
       shell: |
@@ -55,6 +67,11 @@
         path: /root/init-config.yaml
         state: absent
       when: inventory_hostname == "xcat"
+
+    - name: Clean up kubeadm patches
+      file:
+        path: /root/kubeadm-patches
+        state: absent
 
     # - name: Extract token and CA hash from output
     #   set_fact:
