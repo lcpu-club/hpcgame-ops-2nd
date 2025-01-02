@@ -22,6 +22,15 @@ x86_amd:
       ansible_host: 192.168.208.2
     sc4:
       ansible_host: 192.168.208.4
+  vars:
+    extra_kubelet_config: |
+      cpuManagerPolicy: none
+      systemReserved:
+        cpu: "4"
+        memory: 4Gi
+      kubeReserved:
+        cpu: "4"
+        memory: 4Gi
 
 ### Partition: x86 ###
 x86:
@@ -38,6 +47,12 @@ x86:
     l08c49n4:
       ansible_host: 192.168.206.104
       internal_ip: 192.168.50.4
+  vars:
+    extra_kubelet_config: |
+      cpuManagerPolicy: static
+      systemReserved:
+        cpu: "4"
+        memory: 4Gi
 
 ### Partition: arm ###
 arm:
@@ -46,12 +61,24 @@ arm:
       ansible_host: 192.168.207.101
     pku-arm-a02:
       ansible_host: 192.168.207.102
+  vars:
+    extra_kubelet_config: |
+      cpuManagerPolicy: static
+      systemReserved:
+        cpu: "4"
+        memory: 4Gi
 
 ### Partition: npu ###
 npu:
   hosts:
     pku-arm-c01:
       ansible_host: 192.168.207.201
+  vars:
+    extra_kubelet_config: |
+      cpuManagerPolicy: static
+      systemReserved:
+        cpu: "4"
+        memory: 4Gi
 
 all:
   children:

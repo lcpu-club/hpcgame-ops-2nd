@@ -74,7 +74,8 @@ streamingConnectionIdleTimeout: 0s
 syncFrequency: 0s
 volumeStatsAggPeriod: 0s
 # IMPORTANT: CPU Manager enablement (Only on compute nodes)
-cpuManagerPolicy: static
-systemReserved:
-  cpu: "2"
-  memory: 2Gi
+# cpuManagerPolicy: static
+# systemReserved:
+#   cpu: "4"
+#   memory: 4Gi
+{{ extra_kubelet_config | default('') }}
