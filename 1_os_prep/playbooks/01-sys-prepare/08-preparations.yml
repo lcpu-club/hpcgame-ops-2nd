@@ -32,6 +32,7 @@
         reload: yes
 
 - name: Ensure SWAP is enabled and persisted on control nodes
+  hosts: control
   tasks:
     - name: Check if SWAP is already enabled
       command: swapon --show
