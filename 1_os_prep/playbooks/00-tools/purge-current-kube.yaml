@@ -6,3 +6,7 @@
     - name: Reset kubeadm
       shell: kubeadm reset -f
       ignore_errors: yes
+      register: reset_output
+    - name: Debug output
+      debug:
+        var: reset_output
