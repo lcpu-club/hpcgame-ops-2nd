@@ -21,11 +21,10 @@
 192.168.208.4 sc4 sc4.node.lcpu.dev
 
 # Partition: x86
-# TODO: CHANGE TO CONTROL PLANE NETWORK
-192.168.50.1 l08c49n1 l08c49n1.node.lcpu.dev
-192.168.50.2 l08c49n2 l08c49n2.node.lcpu.dev
-192.168.50.3 l08c49n3 l08c49n3.node.lcpu.dev
-192.168.50.4 l08c49n4 l08c49n4.node.lcpu.dev
+192.168.206.101 l08c49n1 l08c49n1.node.lcpu.dev
+192.168.206.102 l08c49n2 l08c49n2.node.lcpu.dev
+192.168.206.103 l08c49n3 l08c49n3.node.lcpu.dev
+192.168.206.104 l08c49n4 l08c49n4.node.lcpu.dev
 
 # Partition: arm
 192.168.207.101 pku-arm-a01 pku-arm-a01.node.lcpu.dev

@@ -100,6 +100,6 @@ all_nodes:
 all_noctrl:
   children:
     x86_amd:
-    # x86: # FIXME: x86 has not been brought up
+    x86:
     arm:
     npu:
