@@ -1,5 +1,5 @@
 ---
-- name: User Management and SSH Key Setup - Remove Rocky User
+- name: Remove Rocky User & Setup Network
   hosts: x86
   remote_user: cloud-user
   become: yes
@@ -14,6 +14,15 @@
       file:
         path: /home/rocky
         state: absent
+
+    - name: Set default gateway using nmcli
+      command: >
+        nmcli connection modify eno2
+        ipv4.gateway 192.168.206.1
+
+    - name: Restart network connection to apply changes
+      command: >
+        nmcli connection up eno2
 
 - name: User Management and SSH Key Setup - Copy SSH Key
   hosts: all_nodes

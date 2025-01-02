@@ -10,6 +10,11 @@
     - name: Bring up the network interface
       command: nmcli con up "System ens1np0"
 
+    - name: Set PFC parameters
+      shell: |
+        echo 106 > /sys/class/infiniband/mlx5_0/tc/1/traffic_class;
+        mlnx_qos -i ens1np0 --pfc 0,0,0,1,0,0,0,0 --trust dscp
+
     - name: Get current IP address
       ansible.builtin.command: ip a
       register: ip_output
