@@ -48,6 +48,9 @@ encryptionAlgorithm: RSA-2048
 etcd:
   local:
     dataDir: /var/lib/etcd
+    extraArgs:
+      - name: quota-backend-bytes
+        value: "34359738368" # 32GB
 imageRepository: registry.k8s.io
 kind: ClusterConfiguration
 kubernetesVersion: 1.32.0
