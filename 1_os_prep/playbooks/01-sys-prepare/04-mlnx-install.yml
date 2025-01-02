@@ -15,7 +15,15 @@
           - lsof
         state: present
 
-    - name: Install MLNX_OFED_LINUX with specified options
-      ansible.builtin.command:
-        cmd: ./mlnxofedinstall --all --with-nfsrdma --without-ucx --without-openmpi --force --enable-mlnx_tune
-        chdir: /cluster/MLNX_OFED_LINUX-24.10-1.1.4.0-rhel9.5-x86_64
+    # MLNX_OFED is old-fashion! Let's use DOCA-Host!
+    # - name: Install MLNX_OFED_LINUX with specified options
+    #   ansible.builtin.command:
+    #     cmd: ./mlnxofedinstall --all --with-nfsrdma --without-ucx --without-openmpi --force --enable-mlnx_tune
+    #     chdir: /cluster/MLNX_OFED_LINUX-24.10-1.1.4.0-rhel9.5-x86_64
+
+    - name: Install DOCA-Host
+      shell: |
+        cd /cluster
+        rpm -i doca-host-2.9.1-018000_24.10_rhel95.x86_64.rpm
+        dnf clean all
+        dnf -y install doca-ofed
