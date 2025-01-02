@@ -7,9 +7,8 @@
     - name: Ensure lines containing 'maas' in /etc/yum.conf are commented out
       lineinfile:
         path: /etc/yum.conf
-        regexp: '^(?!\s*#).*maas'
-        line: '#\1'
-        backrefs: yes
+        regexp: '^proxy=http://192-168-206-0--24\.maas-internal:8000/'
+        state: absent
 
     - name: Comment out mirrorlist and set baseurl for rocky-extras.repo and rocky.repo
       lineinfile:
