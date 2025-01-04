@@ -16,7 +16,7 @@
       changed_when: false
 
     - name: Create VXLAN interface vxlan0 if it does not exist
-      command: >
+      shell: >
         nmcli connection add type vxlan
         con-name vxlan0
         ifname vxlan0
@@ -27,7 +27,7 @@
       when: vxlan_exists.rc != 0
 
     - name: Configure IP address on vxlan0 if it exists
-      command: >
+      shell: >
         nmcli connection modify vxlan0
         ipv4.addresses "{{ roce_vxlan_ip }}/16"
         ipv4.method manual
