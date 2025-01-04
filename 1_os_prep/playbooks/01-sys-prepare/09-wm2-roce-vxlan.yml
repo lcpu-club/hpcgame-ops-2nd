@@ -1,0 +1,39 @@
+---
+- name: Configure VXLAN interface on x86 nodes
+  hosts: x86
+  become: yes
+  tasks:
+    - name: Ensure NetworkManager is running
+      service:
+        name: NetworkManager
+        state: started
+        enabled: yes
+
+    - name: Create VXLAN interface vxlan0
+      nmcli:
+        type: vxlan
+        conn_name: vxlan0
+        ifname: vxlan0
+        vxlan_id: 342
+        vxlan_local: ens1np0 # Hardcoded interface
+        vxlan_remote: 239.100.234.1
+        vxlan_dstport: 9399
+        state: present
+
+    - name: Configure IP address on vxlan0
+      nmcli:
+        conn_name: vxlan0
+        type: vxlan
+        ip4: "{{ roce_vxlan_ip }}/16"
+        state: present
+
+    - name: Set MTU for vxlan0
+      nmcli:
+        conn_name: vxlan0
+        mtu: 4450
+        state: present
+
+    - name: Set VXLAN interface vxlan0 up
+      nmcli:
+        conn_name: vxlan0
+        state: up

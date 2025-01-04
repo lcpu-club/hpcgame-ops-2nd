@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpu-time-slicing-config
+data:
+  v100-32gb: |-
+    version: v1
+    flags:
+      migStrategy: none
+    sharing:
+      resources:
+      - name: nvidia.com/gpu
+        replicas: 64
+
+  v100-16gb: |-
+    version: v1
+    flags:
+      migStrategy: none
+    sharing:
+      resources:
+      - name: nvidia.com/gpu
+        replicas: 32
+
+  # v100-16gb: |-
+  #   version: v1
+  #   flags:
+  #     migStrategy: mixed
+  #   sharing:
+  #     timeSlicing:
+  #       resources:
+  #       - name: nvidia.com/gpu
+  #         replicas: 8
+  #       - name: nvidia.com/mig-1g.5gb
+  #         replicas: 2
+  #       - name: nvidia.com/mig-2g.10gb
+  #         replicas: 2
+  #       - name: nvidia.com/mig-3g.20gb
+  #         replicas: 3
+  #       - name: nvidia.com/mig-7g.40gb
+  #         replicas: 7
+
+  a100-80gb: |-
+    version: v1
+    flags:
+      migStrategy: none
+    sharing:
+      timeSlicing:
+        resources:
+        - name: nvidia.com/gpu
+          replicas: 4
