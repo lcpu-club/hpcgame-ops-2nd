@@ -2,24 +2,27 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: gpu-time-slicing-config
+  namespace: gpu-operator
 data:
-  v100-32gb: |-
+  v100-32gb-shared: |-
     version: v1
     flags:
       migStrategy: none
     sharing:
-      resources:
-      - name: nvidia.com/gpu
-        replicas: 64
+      timeSlicing:
+        resources:
+        - name: nvidia.com/gpu
+          replicas: 64
 
-  v100-16gb: |-
+  v100-16gb-shared: |-
     version: v1
     flags:
       migStrategy: none
     sharing:
-      resources:
-      - name: nvidia.com/gpu
-        replicas: 32
+      timeSlicing:
+        resources:
+        - name: nvidia.com/gpu
+          replicas: 32
 
   # v100-16gb: |-
   #   version: v1
@@ -39,7 +42,7 @@ data:
   #       - name: nvidia.com/mig-7g.40gb
   #         replicas: 7
 
-  a100-80gb: |-
+  a100-80gb-shared: |-
     version: v1
     flags:
       migStrategy: none
@@ -48,3 +51,6 @@ data:
         resources:
         - name: nvidia.com/gpu
           replicas: 4
+
+  a100-80gb: |-
+    version: v1
