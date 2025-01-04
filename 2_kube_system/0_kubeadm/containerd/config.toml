@@ -182,6 +182,8 @@ version = 2
           endpoint = [ "https://k8s.crmirror.lcpu.dev" ]
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."mcr.microsoft.com"]
           endpoint = [ "https://mcr.crmirror.lcpu.dev" ]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."nvcr.io"]
+          endpoint = [ "https://nvcr.crmirror.lcpu.dev" ]
 
     [plugins."io.containerd.grpc.v1.cri".x509_key_pair_streaming]
       tls_cert_file = ""

@@ -2,3 +2,6 @@ cni:
   exclusive: false
 # TODO: tolerations & affinity to make cilium operators and controllers
 # run on control-plane nodes
+hubble:
+  peerService:
+    clusterDomain: hpc.lcpu.dev

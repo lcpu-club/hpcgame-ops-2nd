@@ -1,0 +1,6 @@
+cdi:
+  enabled: true
+
+# We pre-install drivers on nodes, so driver installation can be disabled
+driver:
+  enabled: false

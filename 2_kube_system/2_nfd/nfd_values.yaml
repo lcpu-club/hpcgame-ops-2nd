@@ -21,9 +21,15 @@ master:
                 operator: In
                 values:
                   - control
-# worker:
-#   tolerations: []
+
+worker:
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
 #   nodeSelector: {}
+
 topologyUpdator:
   tolerations:
     - key: node-role.kubernetes.io/master

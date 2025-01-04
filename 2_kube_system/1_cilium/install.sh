@@ -12,3 +12,6 @@ cilium install -f "$(echo "$0" | dirname)/cilium_values.yaml"
 
 # Check Cilium status
 cilium status
+
+# To enable hubble:
+# cilium hubble enable --ui

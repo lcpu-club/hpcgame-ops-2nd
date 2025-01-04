@@ -124,7 +124,7 @@ spec:
       serviceAccountName: multi-networkpolicy
       containers:
         - name: multi-networkpolicy
-          image: ghcr.io/k8snetworkplumbingwg/multi-networkpolicy-iptables:snapshot
+          image: crmirror.lcpu.dev/xtlsoft/multi-networkpolicy-iptables:snapshot
           imagePullPolicy: Always
           command: ["/usr/bin/multi-networkpolicy-iptables"]
           args:
