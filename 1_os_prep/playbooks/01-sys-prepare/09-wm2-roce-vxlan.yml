@@ -21,9 +21,9 @@
         con-name vxlan0
         ifname vxlan0
         vxlan.id 342
-        vxlan.local ens1np0
+        vxlan.parent ens1np0
         vxlan.remote 239.100.234.1
-        vxlan.dst-port 9399
+        vxlan.destination-port 9399
       when: vxlan_exists.rc != 0
 
     - name: Configure IP address on vxlan0 if it exists
@@ -31,12 +31,9 @@
         nmcli connection modify vxlan0
         ipv4.addresses "{{ roce_vxlan_ip }}/16"
         ipv4.method manual
-      when: vxlan_exists.rc == 0
 
     - name: Set MTU for vxlan0 if it exists
       command: nmcli connection modify vxlan0 802-3-ethernet.mtu 4450
-      when: vxlan_exists.rc == 0
 
     - name: Bring up the VXLAN interface if it exists
       command: nmcli connection up vxlan0
-      when: vxlan_exists.rc == 0
