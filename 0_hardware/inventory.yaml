@@ -36,6 +36,7 @@ x86_amd:
       kubeReserved:
         cpu: "4"
         memory: 4Gi
+      maxPods: 512
 
 ### Partition: x86 ###
 x86:

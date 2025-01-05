@@ -12,7 +12,7 @@ data:
       timeSlicing:
         resources:
         - name: nvidia.com/gpu
-          replicas: 64
+          replicas: 16
 
   v100-16gb-shared: |-
     version: v1
@@ -22,7 +22,7 @@ data:
       timeSlicing:
         resources:
         - name: nvidia.com/gpu
-          replicas: 32
+          replicas: 8
 
   # v100-16gb: |-
   #   version: v1

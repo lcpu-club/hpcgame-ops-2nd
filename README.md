@@ -7,6 +7,7 @@ Based on the Kubernetes and Ansible platform, we aim to make the full cluster de
 ## TODOs
 
 - Containerd: DEPRECATION: The `mirrors` property of `[plugins."io.containerd.grpc.v1.cri".registry]` is deprecated since containerd v1.5 and will be removed in containerd v2.1. Use `config_path` instead.
+- Metrics Server: <https://github.com/kubernetes-sigs/metrics-server>
 
 ## Notes
 

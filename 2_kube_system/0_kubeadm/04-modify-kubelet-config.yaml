@@ -1,0 +1,62 @@
+- name: Bootstrap Kubernetes control-plane using kubeadm
+  hosts: ["xcat", "all_noctrl"]
+  become: yes
+  tasks:
+    - name: Generate join token
+      command: kubeadm token create --print-join-command
+      register: kubeadm_init
+      when: inventory_hostname == "xcat"
+
+    - name: Extract token and CA hash from output
+      set_fact:
+        kubeadm_join_token: "{{ kubeadm_init.stdout | regex_search('kubeadm join .* --token (\\S+)', '\\1') | first }}"
+        kubeadm_join_ca_hash: "{{ kubeadm_init.stdout | regex_search('--discovery-token-ca-cert-hash (\\S+)', '\\1') | first }}"
+      when: inventory_hostname == "xcat"
+
+    - name: Set facts on all nodes
+      set_fact:
+        kubeadm_join_token: "{{ kubeadm_join_token }}"
+        kubeadm_join_ca_hash: "{{ kubeadm_join_ca_hash }}"
+      delegate_to: "{{ item }}"
+      delegate_facts: yes
+      with_items: "{{ groups['all_noctrl'] }}"
+      when: inventory_hostname == "xcat"
+
+    - name: Ensure kubeadm patches
+      file:
+        path: /root/kubeadm-patches
+        state: directory
+        mode: "0755"
+      when: inventory_hostname != "xcat"
+
+    - name: Insert kubeletconfiguration patch
+      template:
+        src: ./kubeadm/kubeletconfiguration0+strategic.yaml.j2
+        dest: /root/kubeadm-patches/kubeletconfiguration0+strategic.yaml
+        mode: "0644"
+      when: inventory_hostname != "xcat"
+
+    - name: Copy join config file to all control plane nodes
+      template:
+        src: ./kubeadm/join-compute.yaml.j2
+        dest: /root/join-config.yaml
+        mode: "0644"
+      when: inventory_hostname != "xcat"
+
+    - name: Join control plane nodes to the cluster
+      command: kubeadm join phase kubelet-start --config=/root/join-config.yaml
+      when: inventory_hostname != "xcat"
+      register: kubeadm_join
+      ignore_errors: yes
+
+    - name: Clean up join config file
+      file:
+        path: /root/join-config.yaml
+        state: absent
+      when: inventory_hostname != "xcat"
+
+    - name: Clean up kubeadm patches
+      file:
+        path: /root/kubeadm-patches
+        state: absent
+      when: inventory_hostname != "xcat"
