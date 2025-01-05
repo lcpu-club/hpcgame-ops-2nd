@@ -43,7 +43,7 @@
         mode: "0644"
       when: inventory_hostname != "xcat"
 
-    - name: Join control plane nodes to the cluster
+    - name: Join compute nodes to the cluster
       command: kubeadm join --config=/root/join-config.yaml
       when: inventory_hostname != "xcat"
       register: kubeadm_join
