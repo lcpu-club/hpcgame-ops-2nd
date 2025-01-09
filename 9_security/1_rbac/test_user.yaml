@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hu-test
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hu-test
+  namespace: hu-test
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  generateName: hu-test-
+  namespace: hu-test
+  annotations:
+    kubernetes.io/service-account.name: hu-test
+type: kubernetes.io/service-account-token

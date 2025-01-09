@@ -2,7 +2,7 @@ apiVersion: "k8s.cni.cncf.io/v1"
 kind: NetworkAttachmentDefinition
 metadata:
   name: wm2-roce
-  namespace: kube-system
+  namespace: default
 spec:
   config: |
     {

@@ -38,6 +38,7 @@ apiServer:
     - "192.168.206.2" # Real IP
     - "kubernetes.hpc.lcpu.dev" # DNS Name
     - "kubernetes.svc.hpc.lcpu.dev" # DNS Name
+    - "hpcgame.pku.edu.cn" # Outside DNS Name
 apiVersion: kubeadm.k8s.io/v1beta4
 caCertificateValidityPeriod: 87600h0m0s
 certificateValidityPeriod: 8760h0m0s

@@ -26,4 +26,4 @@
         cd /cluster
         rpm -i doca-host-2.9.1-018000_24.10_rhel95.x86_64.rpm
         dnf clean all
-        dnf -y install doca-ofed
+        dnf -y install doca-ofed kmod-mlnx-nfsrdma

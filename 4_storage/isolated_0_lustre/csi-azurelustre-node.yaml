@@ -22,16 +22,15 @@ spec:
       serviceAccountName: csi-azurelustre-node-sa
       nodeSelector:
         kubernetes.io/os: linux
-        hpc.lcpu.dev/lustre-capable: "true"
-      # affinity: # FIXME: WE DON'T HAVE `virtual-kubelet`
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #         - matchExpressions:
-      #             - key: type
-      #               operator: NotIn
-      #               values:
-      #                 - virtual-kubelet
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: type
+                    operator: NotIn
+                    values:
+                      - virtual-kubelet
       priorityClassName: system-node-critical
       tolerations:
         - operator: "Exists"
@@ -154,7 +153,7 @@ spec:
               name: host-bin
           resources:
             limits:
-              cpu: 1
+              cpu: "1"
               memory: 200Mi
             requests:
               cpu: 10m
