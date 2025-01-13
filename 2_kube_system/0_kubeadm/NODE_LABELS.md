@@ -26,10 +26,10 @@ kubectl label node/xcat hpc.lcpu.dev/partition=control topology.kubernetes.io/re
 kubectl label node/control2 hpc.lcpu.dev/partition=control topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2
 kubectl label node/control3 hpc.lcpu.dev/partition=control topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2
 
-kubectl label node/l08c49n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/lustre-capable=true
-kubectl label node/l08c49n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/lustre-capable=true
-kubectl label node/l08c49n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/lustre-capable=true
-kubectl label node/l08c49n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/lustre-capable=true
+kubectl label node/l08c49n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c49n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c49n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c49n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
 
 kubectl label node/sc2 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/sc4 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main

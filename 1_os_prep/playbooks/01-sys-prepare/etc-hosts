@@ -26,6 +26,11 @@
 192.168.206.103 l08c49n3 l08c49n3.node.lcpu.dev
 192.168.206.104 l08c49n4 l08c49n4.node.lcpu.dev
 
+# Partition: gpu
+192.168.206.201 l12gpu11 l12gpu11.node.lcpu.dev
+192.168.206.202 l12gpu12 l12gpu12.node.lcpu.dev
+192.168.206.203 l12gpu13 l12gpu13.node.lcpu.dev
+
 # Partition: arm
 192.168.207.101 pku-arm-a01 pku-arm-a01.node.lcpu.dev
 192.168.207.102 pku-arm-a02 pku-arm-a02.node.lcpu.dev

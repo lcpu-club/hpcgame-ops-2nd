@@ -1,0 +1,4 @@
+controller:
+  runOnControlPlane: false
+  nodeSelector:
+    hpc.lcpu.dev/nfs-capable: "true"

@@ -64,6 +64,22 @@ x86:
         cpu: "4"
         memory: 4Gi
 
+### Partition: gpu ###
+gpu:
+  hosts:
+    l12gpu11:
+      ansible_host: 192.168.206.201
+    l12gpu12:
+      ansible_host: 192.168.206.202
+    l12gpu13:
+      ansible_host: 192.168.206.203
+  vars:
+    extra_kubelet_config: |
+      cpuManagerPolicy: static
+      systemReserved:
+        cpu: "4"
+        memory: 4Gi
+
 ### Partition: arm ###
 arm:
   hosts:
@@ -106,5 +122,6 @@ all_noctrl:
   children:
     x86_amd:
     x86:
+    gpu:
     arm:
     npu:
