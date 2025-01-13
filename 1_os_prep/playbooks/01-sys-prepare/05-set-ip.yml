@@ -1,19 +1,19 @@
 ---
 - name: Configure ens1np0 network interface
-  hosts: x86
+  hosts: ["x86", "gpu"]
   become: yes
 
   tasks:
     - name: Set ip for host
-      command: nmcli con mod "System ens1np0" ipv4.addresses {{ hostvars[inventory_hostname].internal_ip }}/24 ipv4.method manual ipv6.method disabled mtu 4500
+      command: nmcli con mod "System {{ roce_dev }}" ipv4.addresses {{ hostvars[inventory_hostname].internal_ip }}/24 ipv4.method manual ipv6.method disabled mtu 4500
 
     - name: Bring up the network interface
-      command: nmcli con up "System ens1np0"
+      command: nmcli con up "System {{ roce_dev }}"
 
     - name: Set PFC parameters
       shell: |
         echo 106 > /sys/class/infiniband/mlx5_0/tc/1/traffic_class;
-        mlnx_qos -i ens1np0 --pfc 0,0,0,1,0,0,0,0 --trust dscp
+        mlnx_qos -i {{ roce_dev }} --pfc 0,0,0,1,0,0,0,0 --trust dscp
 
     - name: Get current IP address
       ansible.builtin.command: ip a

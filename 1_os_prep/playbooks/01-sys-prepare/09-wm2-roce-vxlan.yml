@@ -21,7 +21,7 @@
         con-name vxlan0
         ifname vxlan0
         vxlan.id 342
-        vxlan.parent ens1np0
+        vxlan.parent {{ roce_dev }}
         vxlan.remote 239.100.234.1
         vxlan.destination-port 9399
       when: vxlan_exists.rc != 0

@@ -1,6 +1,6 @@
 ---
 - name: Configure Rocky Linux Repositories and Install Packages
-  hosts: ["control", "x86", "x86_amd"]
+  hosts: ["control", "x86", "x86_amd", "gpu"]
   become: true
 
   tasks:

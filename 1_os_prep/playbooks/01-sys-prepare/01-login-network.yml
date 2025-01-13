@@ -1,6 +1,6 @@
 ---
 - name: Remove Rocky User & Setup Network
-  hosts: x86
+  hosts: ["x86", "gpu"]
   remote_user: cloud-user
   become: yes
   tasks:

@@ -4,7 +4,22 @@
   become: yes
   tasks:
     - name: Add static route
-      command: nmcli connection modify "System ens1np0" +ipv4.routes "192.168.51.0/24 192.168.50.254"
+      shell: |
+        nmcli connection modify "System {{ roce_dev }}" +ipv4.routes "192.168.51.0/24 192.168.50.254"
+        nmcli connection modify "System {{ roce_dev }}" +ipv4.routes "192.168.52.0/24 192.168.50.254"
 
     - name: Restart network connection
-      command: nmcli connection up "System ens1np0"
+      command: nmcli connection up "System {{ roce_dev }}"
+
+---
+- name: Configure static route with nmcli command
+  hosts: x86
+  become: yes
+  tasks:
+    - name: Add static route
+      shell: |
+        nmcli connection modify "System {{ roce_dev }}" +ipv4.routes "192.168.50.0/24 192.168.52.254"
+        nmcli connection modify "System {{ roce_dev }}" +ipv4.routes "192.168.51.0/24 192.168.52.254"
+
+    - name: Restart network connection
+      command: nmcli connection up "System {{ roce_dev }}"

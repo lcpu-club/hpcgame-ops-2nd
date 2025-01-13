@@ -1,5 +1,5 @@
 - name: Install MLNX_OFED_LINUX
-  hosts: x86
+  hosts: ["x86", "gpu"]
   become: yes
   tasks:
     - name: Install required packages

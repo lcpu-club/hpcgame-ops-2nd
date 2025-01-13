@@ -19,6 +19,7 @@ control:
       failSwapOn: false
       memorySwap:
         swapBehavior: LimitedSwap
+      podPidsLimit: 16384
 
 ### Partition: x86_amd ###
 x86_amd:
@@ -37,6 +38,7 @@ x86_amd:
         cpu: "4"
         memory: 4Gi
       maxPods: 512
+      podPidsLimit: 16384
 
 ### Partition: x86 ###
 x86:
@@ -58,27 +60,37 @@ x86:
       internal_ip: 192.168.50.4
       roce_vxlan_ip: 10.234.0.104
   vars:
+    roce_dev: ens1np0
     extra_kubelet_config: |
       cpuManagerPolicy: static
       systemReserved:
         cpu: "4"
         memory: 4Gi
+      podPidsLimit: 16384
 
 ### Partition: gpu ###
 gpu:
   hosts:
     l12gpu11:
       ansible_host: 192.168.206.201
+      internal_ip: 192.168.52.1
+      roce_vxlan_ip: 10.234.0.201
     l12gpu12:
       ansible_host: 192.168.206.202
+      internal_ip: 192.168.52.2
+      roce_vxlan_ip: 10.234.0.202
     l12gpu13:
       ansible_host: 192.168.206.203
+      internal_ip: 192.168.52.3
+      roce_vxlan_ip: 10.234.0.203
   vars:
+    roce_dev: eno3np0
     extra_kubelet_config: |
       cpuManagerPolicy: static
       systemReserved:
         cpu: "4"
         memory: 4Gi
+      podPidsLimit: 16384
 
 ### Partition: arm ###
 arm:
@@ -93,6 +105,7 @@ arm:
       systemReserved:
         cpu: "4"
         memory: 4Gi
+      podPidsLimit: 16384
 
 ### Partition: npu ###
 npu:
@@ -105,6 +118,7 @@ npu:
       systemReserved:
         cpu: "4"
         memory: 4Gi
+      podPidsLimit: 16384
 
 all:
   children:

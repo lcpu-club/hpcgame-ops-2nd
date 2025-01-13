@@ -1,5 +1,5 @@
 - name: Mount NFS /cluster from 192.168.206.2
-  hosts: x86
+  hosts: ["x86", "gpu"]
   become: yes
   tasks:
     - name: Install nfs-utils package
