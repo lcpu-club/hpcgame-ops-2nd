@@ -59,6 +59,102 @@ x86:
       ansible_host: 192.168.206.104
       internal_ip: 192.168.50.4
       roce_vxlan_ip: 10.234.0.104
+    l08c50n1:
+      ansible_host: 192.168.206.105
+      internal_ip: 192.168.50.5
+      roce_vxlan_ip: 10.234.0.105
+    l08c50n2:
+      ansible_host: 192.168.206.106
+      internal_ip: 192.168.50.6
+      roce_vxlan_ip: 10.234.0.106
+    l08c50n3:
+      ansible_host: 192.168.206.107
+      internal_ip: 192.168.50.7
+      roce_vxlan_ip: 10.234.0.107
+    l08c50n4:
+      ansible_host: 192.168.206.108
+      internal_ip: 192.168.50.8
+      roce_vxlan_ip: 10.234.0.108
+    l08c51n1:
+      ansible_host: 192.168.206.109
+      internal_ip: 192.168.50.9
+      roce_vxlan_ip: 10.234.0.109
+    l08c51n2:
+      ansible_host: 192.168.206.110
+      internal_ip: 192.168.50.10
+      roce_vxlan_ip: 10.234.0.110
+    l08c51n3:
+      ansible_host: 192.168.206.111
+      internal_ip: 192.168.50.11
+      roce_vxlan_ip: 10.234.0.111
+    l08c51n4:
+      ansible_host: 192.168.206.112
+      internal_ip: 192.168.50.12
+      roce_vxlan_ip: 10.234.0.112
+    l08c52n1:
+      ansible_host: 192.168.206.113
+      internal_ip: 192.168.50.13
+      roce_vxlan_ip: 10.234.0.113
+    l08c52n2:
+      ansible_host: 192.168.206.114
+      internal_ip: 192.168.50.14
+      roce_vxlan_ip: 10.234.0.114
+    l08c52n3:
+      ansible_host: 192.168.206.115
+      internal_ip: 192.168.50.15
+      roce_vxlan_ip: 10.234.0.115
+    l08c52n4:
+      ansible_host: 192.168.206.116
+      internal_ip: 192.168.50.16
+      roce_vxlan_ip: 10.234.0.116
+    l08c54n1:
+      ansible_host: 192.168.206.121
+      internal_ip: 192.168.50.21
+      roce_vxlan_ip: 10.234.0.121
+    l08c54n2:
+      ansible_host: 192.168.206.122
+      internal_ip: 192.168.50.22
+      roce_vxlan_ip: 10.234.0.122
+    l08c54n3:
+      ansible_host: 192.168.206.123
+      internal_ip: 192.168.50.23
+      roce_vxlan_ip: 10.234.0.123
+    l08c54n4:
+      ansible_host: 192.168.206.124
+      internal_ip: 192.168.50.24
+      roce_vxlan_ip: 10.234.0.124
+    l08c55n1:
+      ansible_host: 192.168.206.125
+      internal_ip: 192.168.50.25
+      roce_vxlan_ip: 10.234.0.125
+    l08c55n2:
+      ansible_host: 192.168.206.126
+      internal_ip: 192.168.50.26
+      roce_vxlan_ip: 10.234.0.126
+    l08c55n3:
+      ansible_host: 192.168.206.127
+      internal_ip: 192.168.50.27
+      roce_vxlan_ip: 10.234.0.127
+    l08c55n4:
+      ansible_host: 192.168.206.128
+      internal_ip: 192.168.50.28
+      roce_vxlan_ip: 10.234.0.128
+    l08c56n1:
+      ansible_host: 192.168.206.129
+      internal_ip: 192.168.50.29
+      roce_vxlan_ip: 10.234.0.129
+    l08c56n2:
+      ansible_host: 192.168.206.130
+      internal_ip: 192.168.50.30
+      roce_vxlan_ip: 10.234.0.130
+    l08c56n3:
+      ansible_host: 192.168.206.131
+      internal_ip: 192.168.50.31
+      roce_vxlan_ip: 10.234.0.131
+    l08c56n4:
+      ansible_host: 192.168.206.132
+      internal_ip: 192.168.50.32
+      roce_vxlan_ip: 10.234.0.132
   vars:
     roce_dev: ens1np0
     extra_kubelet_config: |
@@ -83,6 +179,14 @@ gpu:
       ansible_host: 192.168.206.203
       internal_ip: 192.168.52.3
       roce_vxlan_ip: 10.234.0.203
+    l12gpu23:
+      ansible_host: 192.168.206.204
+      internal_ip: 192.168.52.4
+      roce_vxlan_ip: 10.234.0.204
+    l12gpu25:
+      ansible_host: 192.168.206.205
+      internal_ip: 192.168.52.5
+      roce_vxlan_ip: 10.234.0.205
   vars:
     roce_dev: eno3np0
     extra_kubelet_config: |
@@ -112,6 +216,10 @@ npu:
   hosts:
     pku-arm-c01:
       ansible_host: 192.168.207.201
+    pku-arm-c02:
+      ansible_host: 192.168.207.202
+    pku-arm-c03:
+      ansible_host: 192.168.207.203
   vars:
     extra_kubelet_config: |
       cpuManagerPolicy: static
