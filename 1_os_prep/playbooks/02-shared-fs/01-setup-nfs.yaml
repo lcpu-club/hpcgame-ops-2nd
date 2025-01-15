@@ -1,0 +1,33 @@
+---
+- name: Mount NFS share with specified options
+  hosts: [x86, gpu]
+  become: yes
+  tasks:
+    - name: Ensure NFS utilities are installed
+      ansible.builtin.package:
+        name: nfs-utils
+        state: present
+
+    - name: Create the mount point directory
+      ansible.builtin.file:
+        path: /mnt/nfs
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Mount the NFS share immediately
+      ansible.builtin.mount:
+        path: /mnt/nfs
+        src: 192.168.50.10:/mnt/nfs
+        fstype: nfs
+        opts: nfsvers=4.2,rdma
+        state: mounted
+
+    - name: Ensure the NFS share is added to /etc/fstab for persistence
+      ansible.builtin.mount:
+        path: /mnt/nfs
+        src: 192.168.50.10:/mnt/nfs
+        fstype: nfs
+        opts: nfsvers=4.2,rdma
+        state: present

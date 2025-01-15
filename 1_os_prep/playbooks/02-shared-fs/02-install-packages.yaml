@@ -1,0 +1,11 @@
+---
+- name: Install NBD and QEMU packages
+  hosts: [x86, gpu]
+  become: yes
+  tasks:
+    - name: Install required packages
+      ansible.builtin.package:
+        name:
+          - qemu-img
+          - nbd
+        state: present

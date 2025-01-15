@@ -1,0 +1,10 @@
+[Unit]
+Description=Mount qcow2 image for containerd
+Before=containerd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mount_qcow2_for_containerd.sh
+
+[Install]
+WantedBy=multi-user.target

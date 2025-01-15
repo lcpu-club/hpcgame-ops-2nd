@@ -1,0 +1,97 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: competitor-role
+rules:
+  # Permissions for Pods
+  - apiGroups: [""]
+    resources:
+      [
+        "pods",
+        "pods/log",
+        "pods/exec",
+        "pods/portforward",
+        "pods/proxy",
+        "pods/status",
+        "pods/attach",
+      ]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for Jobs
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for Services
+  - apiGroups: [""]
+    resources: ["services", "endpoints", "ingresses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for ConfigMaps & Secrets
+  - apiGroups: [""]
+    resources: ["configmaps", "secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for PersistentVolumeClaims (PVCs)
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for JobSet (kueue API group)
+  - apiGroups: ["kueue.x-k8s.io"]
+    resources: ["jobsets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for sshkeypair (ssh-operator.lcpu.dev/v1alpha1)
+  - apiGroups: ["ssh-operator.lcpu.dev"]
+    resources: ["sshkeypairs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for sshauthorizedkey (ssh-operator.lcpu.dev/v1alpha1)
+  - apiGroups: ["ssh-operator.lcpu.dev"]
+    resources: ["sshauthorizedkeys"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for ServiceAccounts
+  - apiGroups: [""]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for Roles
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for RoleBindings
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["rolebindings"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for resourcequotas & limitranges
+  - apiGroups: [""]
+    resources: ["resourcequotas", "limitranges"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: competitor-role-global
+rules:
+  # Permissions for Namespaces
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: competitor-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: competitor-role-global
+subjects:
+  - kind: Group
+    name: hpcgame:competitors

@@ -1,0 +1,30 @@
+apiVersion: config.gatekeeper.sh/v1alpha1
+kind: Config
+metadata:
+  name: config
+  namespace: "gatekeeper-system"
+spec:
+  match:
+    - excludedNamespaces:
+        [
+          "kube-system",
+          "kube-node-lease",
+          "gpu-operator",
+          "cert-manager",
+          "kubernetes-dashboard",
+          "gatekeeper-system",
+          "kube-auth-proxy-system",
+          "user-operator-system",
+          "ssh-operator-system",
+          "lxcfs-system",
+          "queue-system",
+          "node-feature-discovery",
+          "openebs",
+        ]
+      processes: ["*"]
+    # - excludedNamespaces: ["audit-excluded-ns"]
+    #   processes: ["audit"]
+    # - excludedNamespaces: ["audit-webhook-sync-excluded-ns"]
+    #   processes: ["audit", "webhook", "sync"]
+    # - excludedNamespaces: ["mutation-excluded-ns"]
+    #   processes: ["mutation-webhook"]

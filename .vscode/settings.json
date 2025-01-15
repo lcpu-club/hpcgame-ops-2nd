@@ -5,6 +5,7 @@
             "file:///home/ubuntu/repos/github.com/lcpu-club/hpcgame-ops-2nd/1_os_prep/playbooks/01-sys-prepare/02-rocky-init.yml",
             "file:///home/ubuntu/repos/github.com/lcpu-club/hpcgame-ops-2nd/1_os_prep/playbooks/01-sys-prepare/02-os-init.yml",
             "file:///home/ubuntu/repos/github.com/lcpu-club/hpcgame-ops-2nd/2_kube_system/0_kubeadm/00-install-packages.yaml"
-        ]
+        ],
+        "kubernetes://schema/v1%40namespace": "file:///home/ubuntu/repos/github.com/lcpu-club/hpcgame-ops-2nd/6_misc/2_useroperator/deploy.yaml"
     }
 }

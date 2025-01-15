@@ -1,0 +1,9 @@
+engines:
+  local:
+    lvm:
+      enabled: true
+    zfs:
+      enabled: true
+  replicated:
+    mayastor:
+      enabled: false

@@ -1,0 +1,119 @@
+apiVersion: user-operator.lcpu.dev/v1alpha1
+kind: UserCreationConfig
+metadata:
+  labels:
+    app.kubernetes.io/name: user-operator
+  name: namespace-prefix
+spec:
+  enabled: true
+  namespacePrefix: u-
+  resources:
+    - |
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: {{ .Namespace }}
+        labels:
+          # pod-security.kubernetes.io/enforce: baseline
+          ssh-operator.lcpu.dev/inject: conditional
+          lxcfs.lcpu.dev/inject: enabled
+
+---
+apiVersion: user-operator.lcpu.dev/v1alpha1
+kind: UserCreationConfig
+metadata:
+  labels:
+    app.kubernetes.io/name: user-operator
+  name: rbac-config
+spec:
+  enabled: true
+  resources:
+    - |
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: rolebinding-user-{{ .Username }}
+        namespace: {{ .Namespace }}
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: competitor-role
+      subjects:
+        - kind: User
+          name: {{ .Username }}
+
+---
+apiVersion: user-operator.lcpu.dev/v1alpha1
+kind: UserCreationConfig
+metadata:
+  labels:
+    app.kubernetes.io/name: user-operator
+  name: ssh-keypair
+spec:
+  enabled: true
+  resources:
+    - |
+      apiVersion: ssh-operator.lcpu.dev/v1alpha1
+      kind: SSHKeyPair
+      metadata:
+        name: default-ed25519
+      spec: {}
+
+---
+apiVersion: user-operator.lcpu.dev/v1alpha1
+kind: UserCreationConfig
+metadata:
+  labels:
+    app.kubernetes.io/name: user-operator
+  name: network-policy
+spec:
+  enabled: true
+  resources:
+    - |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: default-deny-all
+      spec:
+        podSelector: {}
+        policyTypes:
+          - Ingress
+          - Egress
+        ingress: []
+        egress: []
+
+---
+apiVersion: user-operator.lcpu.dev/v1alpha1
+kind: UserCreationConfig
+metadata:
+  labels:
+    app.kubernetes.io/name: user-operator
+  name: resource-limit
+spec:
+  enabled: true
+  resources:
+    - |
+      apiVersion: v1
+      kind: ResourceQuota
+      metadata:
+        name: default-resource-quota
+      spec:
+        hard:
+          requests.cpu: "1"
+          requests.memory: 1Gi
+          limits.cpu: "2"
+          limits.memory: 2Gi
+    - |
+      apiVersion: v1
+      kind: LimitRange
+      metadata:
+        name: default-limit-range
+      spec:
+        limits:
+          - default:
+              cpu: 500m
+              memory: 500Mi
+            defaultRequest:
+              cpu: 100m
+              memory: 100Mi
+            type: Container

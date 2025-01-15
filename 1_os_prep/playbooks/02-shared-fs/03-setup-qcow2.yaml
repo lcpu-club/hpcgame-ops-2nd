@@ -1,0 +1,41 @@
+---
+- name: Setup qcow2 service for containerd
+  hosts: x86
+  become: yes
+  tasks:
+    - name: Copy mount-qcow2-for-containerd.service to systemd
+      copy:
+        src: mount-qcow2-for-containerd.service
+        dest: /etc/systemd/system/mount-qcow2-for-containerd.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Copy mount_qcow2_for_containerd.sh to /usr/local/bin
+      copy:
+        src: mount_qcow2_for_containerd.sh
+        dest: /usr/local/bin/mount_qcow2_for_containerd.sh
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Copy setup_qcow2_for_containerd.sh to /tmp
+      copy:
+        src: setup_qcow2_for_containerd.sh
+        dest: /tmp/setup_qcow2_for_containerd.sh
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Run setup_qcow2_for_containerd.sh
+      command: /tmp/setup_qcow2_for_containerd.sh
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Enable and start mount-qcow2-for-containerd service
+      systemd:
+        name: mount-qcow2-for-containerd
+        enabled: yes
+        state: started

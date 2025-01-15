@@ -1,0 +1,274 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kube-auth-proxy-system
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kube-auth-proxy-impersonator
+rules:
+  - apiGroups: [""]
+    resources: ["users", "groups", "serviceaccounts"]
+    verbs: ["impersonate"]
+  - apiGroups: ["authentication.k8s.io"]
+    resources:
+      [
+        "uids",
+        "userextras/name",
+        "userextras/realname",
+        "userextras/email",
+        "userextras/telephone",
+        "userextras/school",
+        "userextras/studentgrade",
+      ]
+    verbs: ["impersonate"]
+  - apiGroups: ["user-operator.lcpu.dev"]
+    resources: ["users"]
+    verbs: ["get", "create", "list", "watch", "update", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kube-auth-proxy-impersonator-rolebinding
+  namespace: kube-auth-proxy-system
+subjects:
+  - kind: ServiceAccount
+    name: kube-auth-proxy
+    namespace: kube-auth-proxy-system
+roleRef:
+  kind: ClusterRole
+  name: kube-auth-proxy-impersonator
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-auth-proxy
+  namespace: kube-auth-proxy-system
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: kube-auth-proxy
+    control-plane: kube-auth-proxy
+  name: kube-auth-proxy-service
+  namespace: kube-auth-proxy-system
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 31808
+  selector:
+    control-plane: kube-auth-proxy
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: kube-auth-proxy
+    control-plane: kube-auth-proxy
+  name: kube-auth-proxy
+  namespace: kube-auth-proxy-system
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      control-plane: kube-auth-proxy
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: kube-auth-proxy
+      labels:
+        control-plane: kube-auth-proxy
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: hpc.lcpu.dev/partition
+                    operator: In
+                    values:
+                      - control
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+      containers:
+        - args:
+            - -listen=:8080
+            - -storage=redis://redis:6379
+            - -oauth-callback=https://hpcgame.pku.edu.cn/kube/_/oauth/callback
+            - -kubeconfig-template-path=/etc/kubeconfig-template/kubeconfig.tmpl
+          command:
+            - /manager
+          env:
+            - name: OAUTH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secrets
+                  key: oauth-secret
+            - name: OAUTH_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oauth-secrets
+                  key: oauth-app-id
+          image: crmirror.lcpu.dev/xtlsoft/kube-auth-proxy:v0.1.1
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          name: kube-auth-proxy
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: "4"
+              memory: 4Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /etc/kubeconfig-template
+              name: kubeconfig-template
+              readOnly: true
+      volumes:
+        - name: kubeconfig-template
+          configMap:
+            name: kubeconfig-template
+      securityContext:
+        runAsNonRoot: true
+      serviceAccountName: kube-auth-proxy
+      terminationGracePeriodSeconds: 10
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: kube-auth-proxy-pdb
+  namespace: kube-auth-proxy-system
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      control-plane: kube-auth-proxy
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubeconfig-template
+  labels:
+    app.kubernetes.io/name: kube-auth-proxy
+  namespace: kube-auth-proxy-system
+data:
+  kubeconfig.tmpl: |
+    apiVersion: v1
+    clusters:
+      - cluster:
+          server: https://hpcgame.pku.edu.cn/kube
+          # insecure-skip-tls-verify: true
+        name: hpcgame
+    contexts:
+      - context:
+          cluster: hpcgame
+          user: {{ .Username }}
+          namespace: u-{{ .Username }}
+        name: {{ .Username }}@hpcgame
+    current-context: {{ .Username }}@hpcgame
+    kind: Config
+    preferences: {}
+    users:
+      - name: {{ .Username }}
+        user:
+          token: {{ .Token }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: kube-auth-proxy
+    control-plane: kube-auth-proxy-redis
+  name: redis
+  namespace: kube-auth-proxy-system
+spec:
+  ports:
+    - name: redis
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    control-plane: kube-auth-proxy-redis
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: kube-auth-proxy
+    control-plane: kube-auth-proxy-redis
+  name: redis
+  namespace: kube-auth-proxy-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: kube-auth-proxy-redis
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: redis
+      labels:
+        control-plane: kube-auth-proxy-redis
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: hpc.lcpu.dev/partition
+                    operator: In
+                    values:
+                      - x86_amd
+              weight: 1
+      containers:
+        - command:
+            - redis-server
+          image: redis:6.0.9
+          name: redis
+          resources:
+            limits:
+              cpu: "4"
+              memory: 16Gi
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+      terminationGracePeriodSeconds: 10
