@@ -14,16 +14,24 @@
           - pciutils
           - lsof
         state: present
+    
+    - name:  dnf groupinstall "Development Tools"
+      ansible.builtin.command:
+        cmd: dnf -y groupinstall "Development Tools"
 
-    # MLNX_OFED is old-fashion! Let's use DOCA-Host!
-    # - name: Install MLNX_OFED_LINUX with specified options
-    #   ansible.builtin.command:
-    #     cmd: ./mlnxofedinstall --all --with-nfsrdma --without-ucx --without-openmpi --force --enable-mlnx_tune
-    #     chdir: /cluster/MLNX_OFED_LINUX-24.10-1.1.4.0-rhel9.5-x86_64
-
-    - name: Install DOCA-Host
+    - name: Remove DOCA-Host
       shell: |
-        cd /cluster
-        rpm -i doca-host-2.9.1-018000_24.10_rhel95.x86_64.rpm
-        dnf clean all
-        dnf -y install doca-ofed kmod-mlnx-nfsrdma
+        dnf -y remove doca-host doca-ofed kmod-mlnx-nfsrdma
+
+    - name: Install MLNX_OFED_LINUX with specified options
+      ansible.builtin.command:
+        cmd: ./mlnxofedinstall --all --with-nfsrdma --without-ucx --without-openmpi --force
+        chdir: /cluster/MLNX_OFED_LINUX-24.10-1.1.4.0-rhel9.5-ext
+
+    - name: unload xprtrdma kernel module
+      shell: |
+        modprobe -r xprtrdma
+    
+    - name: Reload the kernel modules
+      ansible.builtin.command:
+        cmd: /etc/init.d/openibd restart

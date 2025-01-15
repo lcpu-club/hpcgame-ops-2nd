@@ -1,6 +1,6 @@
 ---
 - name: Copy etc-hosts file to all nodes
-  hosts: all_nodes
+  hosts: all
   become: true
 
   tasks:

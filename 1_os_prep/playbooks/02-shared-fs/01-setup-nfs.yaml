@@ -16,18 +16,24 @@
         group: root
         mode: "0755"
 
+    - name: Load xprtrdma kernel module
+      ansible.builtin.modprobe:
+        name: xprtrdma
+    
+    - name: change /etc/rdma/modules/rdma.conf to enable xprtrdma
+      ansible.builtin.replace:
+        path: /etc/rdma/modules/rdma.conf
+        regexp: '^#?xprtrdma'
+        replace: xprtrdma
+
     - name: Mount the NFS share immediately
-      ansible.builtin.mount:
-        path: /mnt/nfs
-        src: 192.168.50.10:/mnt/nfs
-        fstype: nfs
-        opts: nfsvers=4.2,rdma
-        state: mounted
+      ansible.builtin.shell:
+        cmd: mount -o rdma,vers=4,minorversion=2 192.168.51.10:/mnt/nfs /mnt/nfs
 
     - name: Ensure the NFS share is added to /etc/fstab for persistence
       ansible.builtin.mount:
         path: /mnt/nfs
         src: 192.168.50.10:/mnt/nfs
-        fstype: nfs
-        opts: nfsvers=4.2,rdma
+        fstype: nfs4
+        opts: rdma,vers=4,minorversion=2
         state: present

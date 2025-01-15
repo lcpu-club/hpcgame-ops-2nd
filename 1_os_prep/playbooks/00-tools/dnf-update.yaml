@@ -1,0 +1,12 @@
+---
+- name: Update system packages and reboot
+  hosts: group1
+  become: true
+  tasks:
+    - name: Update all packages
+      dnf:
+        name: "*"
+        state: latest
+        update_cache: yes
+      register: dnf_update
+

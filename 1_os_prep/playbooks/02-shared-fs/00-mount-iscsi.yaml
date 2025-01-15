@@ -1,0 +1,72 @@
+---
+- name: Configure iSCSI client and mount storage
+  hosts: x86
+  become: true
+  tasks:
+    - name: Ensure required packages are installed
+      package:
+        name: 
+          - iscsi-initiator-utils
+          - lsscsi
+        state: present
+      
+    - name: Set node.startup to manual in iscsid.conf
+      lineinfile:
+        path: /etc/iscsi/iscsid.conf
+        regexp: '^node.startup = automatic'
+        line: 'node.startup = manual'
+        backup: yes
+      
+    - name: Restart iscsid service to apply configuration
+      systemd:
+        name: iscsid
+        state: restarted
+        enabled: yes
+      
+    - name: Discover iSCSI targets using iser
+      command: iscsiadm -m discovery -t sendtargets -p 192.168.51.10:3343 -I iser
+      register: discovery_result
+      ignore_errors: yes
+      
+    - name: Display discovery result
+      debug:
+        var: discovery_result.stdout_lines
+      when: discovery_result.stdout is defined
+
+    - name: Wait for a few seconds after discovery
+      pause:
+        seconds: 5
+      
+    - name: Get hostname
+      shell: hostname | cut -d '.' -f 1
+      register: hostname_result
+      
+    - name: Login to specific target for this host
+      command: >
+        iscsiadm -m node -T iqn.2025-01.org.lcpu.{{ hostname_result.stdout |  trim }}:storage 
+        -p 192.168.51.10:3343 -I iser --login
+      register: login_result
+      ignore_errors: yes
+
+    - name: Mount iqn on boot
+      command: >
+        iscsiadm -m node -T iqn.2025-01.org.lcpu.{{ hostname_result.stdout | trim }}:storage -p 192.168.51.10:3343  -I iser 
+        --op update -n node.startup -v automatic
+      when: login_result.rc == 0
+      
+    - name: Display login result
+      debug:
+        var: login_result.stdout_lines
+      when: login_result.stdout is defined
+
+    - name: Wait for device to appear
+      pause:
+        seconds: 5
+        
+    - name: Show connected SCSI devices
+      command: lsscsi
+      register: lsscsi_result
+      
+    - name: Display SCSI devices
+      debug:
+        var: lsscsi_result.stdout_lines

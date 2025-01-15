@@ -14,6 +14,8 @@
       shell: |
         echo 106 > /sys/class/infiniband/mlx5_0/tc/1/traffic_class;
         mlnx_qos -i {{ roce_dev }} --pfc 0,0,0,1,0,0,0,0 --trust dscp
+        echo 'echo 106 > /sys/class/infiniband/mlx5_0/tc/1/traffic_class;' > /etc/rc.local
+        echo 'mlnx_qos -i {{ roce_dev }} --pfc 0,0,0,1,0,0,0,0 --trust dscp' >> /etc/rc.local
 
     - name: Get current IP address
       ansible.builtin.command: ip a

@@ -1,0 +1,9 @@
+---
+# reboot.yml
+- name: reboot
+  hosts: ["x86", "gpu"]
+  become: true
+
+  tasks:
+    - name: 重启主机
+      reboot:
