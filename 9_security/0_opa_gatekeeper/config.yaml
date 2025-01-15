@@ -20,6 +20,8 @@ spec:
           "queue-system",
           "node-feature-discovery",
           "openebs",
+          "ot-operators",
+          "redis-system",
         ]
       processes: ["*"]
     # - excludedNamespaces: ["audit-excluded-ns"]
