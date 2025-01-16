@@ -54,6 +54,7 @@
 192.168.206.203 l12gpu13 l12gpu13.node.lcpu.dev
 192.168.206.204 l12gpu23 l12gpu23.node.lcpu.dev
 192.168.206.205 l12gpu25 l12gpu25.node.lcpu.dev
+192.168.206.206	l12gpu26 l12gpu26.node.lcpu.dev
 
 # Partition: arm
 192.168.207.101 pku-arm-a01 pku-arm-a01.node.lcpu.dev
@@ -69,5 +70,11 @@
 192.168.207.202 pku-arm-c02 pku-arm-c02.node.lcpu.dev
 192.168.207.203 pku-arm-c03 pku-arm-c03.node.lcpu.dev
 
+# Partition: npu_inf
+192.168.207.211 pku-arm-d01 pku-arm-d01.node.lcpu.dev
+192.168.207.212 pku-arm-d02 pku-arm-d02.node.lcpu.dev
+192.168.207.213 pku-arm-d03 pku-arm-d03.node.lcpu.dev
+192.168.207.214 pku-arm-d04 pku-arm-d04.node.lcpu.dev
+192.168.207.215 pku-arm-d05 pku-arm-d05.node.lcpu.dev
 
 ### HPCGame End ###
