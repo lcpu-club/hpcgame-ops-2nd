@@ -1,0 +1,44 @@
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ResourceFlavor
+metadata:
+  name: "default-flavor"
+# Empty spec matches all nodes.
+# Suitable for not flavored resources.
+spec: {}
+
+---
+# Example with tolerations, maybe useless now
+# apiVersion: kueue.x-k8s.io/v1beta1
+# kind: ResourceFlavor
+# metadata:
+#   name: "spot"
+# spec:
+#   nodeLabels:
+#     instance-type: spot
+#   nodeTaints:
+#     - effect: NoSchedule
+#       key: spot
+#       value: "true"
+#   tolerations:
+#     - key: "spot-taint"
+#       operator: "Exists"
+#       effect: "NoSchedule"
+#
+# ---
+
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ResourceFlavor
+metadata:
+  name: "gpu-a800"
+spec:
+  nodeLabels:
+    nvidia.com/gpu.product: NVIDIA-A800-80GB-PCIe
+
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ResourceFlavor
+metadata:
+  name: "gpu-a800"
+spec:
+  nodeLabels:
+    nvidia.com/gpu.product: NVIDIA-L40

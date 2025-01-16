@@ -17,11 +17,12 @@ spec:
           "user-operator-system",
           "ssh-operator-system",
           "lxcfs-system",
-          "queue-system",
+          "kueue-system",
           "node-feature-discovery",
           "openebs",
           "ot-operators",
           "redis-system",
+          "jobset-system",
           "hpcgame-system",
           "default",
         ]

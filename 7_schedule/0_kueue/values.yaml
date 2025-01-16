@@ -6,7 +6,7 @@
 # Enable each function, like kustomize https://github.com/kubernetes-sigs/kueue/blob/main/config/default/kustomization.yaml
 enablePrometheus: false
 # Enable x509 automated certificate management using cert-manager (cert-manager.io)
-enableCertManager: true
+enableCertManager: false # IT HAS BUGS!!??
 # Enable API Priority and Fairness configuration for the visibility API
 enableVisibilityAPF: false
 # Customize controllerManager
@@ -36,7 +36,7 @@ controllerManager:
       capabilities:
         drop:
           - ALL
-  replicas: 2
+  replicas: 1
   # imagePullSecrets: []
   readinessProbe:
     initialDelaySeconds: 5
@@ -63,7 +63,7 @@ managerConfig:
     health:
       healthProbeBindAddress: :8081
     metrics:
-      bindAddress: :8443
+      bindAddress: :8643 # 8443 conflicts with kube-auth-proxy
     # enableClusterQueueResources: true
     webhook:
       port: 9443
@@ -112,7 +112,7 @@ managerConfig:
       - "kubeflow.org/tfjob"
       - "kubeflow.org/xgboostjob"
       - "pod"
-      - "deployment"
+      # - "deployment"
     #  externalFrameworks:
     #  - "Foo.v1.example.com"
     #  podOptions:

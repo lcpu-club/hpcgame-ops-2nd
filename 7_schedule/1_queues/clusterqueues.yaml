@@ -1,0 +1,102 @@
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: judge-queue
+spec:
+  namespaceSelector:
+    matchLabels:
+      hpcgame.pku.edu.cn/kind: judge
+  cohort: "hpcgame"
+  resourceGroups:
+    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu"]
+      flavors:
+        - name: "default-flavor"
+          resources:
+            - name: "cpu"
+              nominalQuota: 9
+              lendingLimit: 0
+              borrowingLimit: 10
+            - name: "memory"
+              nominalQuota: 36Gi
+              lendingLimit: 0
+              borrowingLimit: 10Gi
+            - name: "pods"
+              nominalQuota: 5
+              lendingLimit: 0
+              borrowingLimit: 10
+        - name: "gpu-a800"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 2
+              lendingLimit: 0
+              borrowingLimit: 1
+        - name: "gpu-l40"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 2
+              lendingLimit: 0
+              borrowingLimit: 1
+
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: default-queue
+spec:
+  namespaceSelector: {} # match all.
+  cohort: "hpcgame"
+  resourceGroups:
+    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu"]
+      flavors:
+        - name: "default-flavor"
+          resources:
+            - name: "cpu"
+              nominalQuota: 64
+            - name: "memory"
+              nominalQuota: 128Gi
+            - name: "pods"
+              nominalQuota: 30
+        - name: "gpu-a800"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 4
+        - name: "gpu-l40"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 4
+
+---
+# DON'T APPLY THIS, THIS IS FOR COMPETITORS!!!
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: queue-user-u-xxxxx
+spec:
+  namespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: u-xxxxx # Only allow some user to use
+  cohort: "hpcgame"
+  resourceGroups:
+    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu"]
+      flavors:
+        - name: "default-flavor"
+          resources:
+            - name: "cpu"
+              nominalQuota: 0
+              borrowingLimit: 4
+            - name: "memory"
+              nominalQuota: 0
+              borrowingLimit: 8Gi
+            - name: "pods"
+              nominalQuota: 0
+              borrowingLimit: 2
+        - name: "gpu-a800"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 0
+              borrowingLimit: 1
+        - name: "gpu-l40"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 0
+              borrowingLimit: 1

@@ -1,7 +1,7 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: juicefs-sc
+  name: juicefs
 provisioner: csi.juicefs.com
 parameters:
   csi.storage.k8s.io/provisioner-secret-name: juicefs-secret
@@ -9,6 +9,11 @@ parameters:
   csi.storage.k8s.io/node-publish-secret-name: juicefs-secret
   csi.storage.k8s.io/node-publish-secret-namespace: default
 reclaimPolicy: Retain
+
+# Prepare cache:
+# mkdir -p /mnt/nfs/juicefs_cache
+# mkdir -p /var/juicefs_cache && mount --bind /mnt/nfs/juicefs_cache /var/juicefs_cache
 mountOptions:
   - cache-dir=/var/juicefs_cache
-  - cache-size=204800
+  - cache-size=409600 # MiB, 400 GiB
+  - buffer-size=256 # MiB
