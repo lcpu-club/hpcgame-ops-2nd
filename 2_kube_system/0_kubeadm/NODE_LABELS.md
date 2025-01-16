@@ -30,12 +30,39 @@ kubectl label node/l08c49n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/re
 kubectl label node/l08c49n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
 kubectl label node/l08c49n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
 kubectl label node/l08c49n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c50n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c50n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c50n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c50n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c51n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c51n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c52n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c52n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c52n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c52n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c54n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c54n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c54n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c54n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c55n1 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c55n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c55n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c56n2 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c56n3 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l08c56n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
 
 kubectl label node/sc2 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/sc4 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 
 kubectl label node/pku-arm-a01 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/pku-arm-a02 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-b01 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-b02 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-b03 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-b04 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-b05 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 
 kubectl label node/pku-arm-c01 hpc.lcpu.dev/partition=npu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-c02 hpc.lcpu.dev/partition=npu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-c03 hpc.lcpu.dev/partition=npu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 ```

@@ -281,3 +281,4 @@ all_noctrl:
     gpu:
     arm:
     npu:
+    npu_inf:
