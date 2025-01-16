@@ -242,6 +242,26 @@ npu:
         memory: 4Gi
       podPidsLimit: 16384
 
+npu-inf:
+  hosts:
+    pku-arm-d01:
+      ansible_host: 192.168.207.211
+    pku-arm-d02:
+      ansible_host: 192.168.207.212
+    pku-arm-d03:
+      ansible_host: 192.168.207.213
+    pku-arm-d04:
+      ansible_host: 192.168.207.214
+    pku-arm-d05:
+      ansible_host: 192.168.207.215
+  vars:
+    extra_kubelet_config: |
+      cpuManagerPolicy: static
+      systemReserved:
+        cpu: "4"
+        memory: 4Gi
+      podPidsLimit: 16384
+
 all:
   children:
     all_nodes:
