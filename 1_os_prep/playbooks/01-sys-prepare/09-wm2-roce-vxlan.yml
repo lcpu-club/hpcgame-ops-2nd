@@ -1,6 +1,6 @@
 ---
 - name: Configure VXLAN interface on x86 nodes
-  hosts: x86
+  hosts: [x86, gpu]
   become: yes
   tasks:
     - name: Ensure NetworkManager is running
