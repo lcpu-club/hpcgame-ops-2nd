@@ -81,6 +81,176 @@ spec:
           - Egress
         ingress: []
         egress: []
+    - |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: allow-egress-dns
+      spec:
+        podSelector: {}
+        policyTypes:
+          - Egress
+        egress:
+          - ports:
+              - port: 53
+                protocol: UDP
+              - port: 53
+                protocol: TCP
+            to:
+              - namespaceSelector: {}
+                podSelector:
+                  matchLabels:
+                    k8s-app: kube-dns
+    - |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: allow-same-namespace
+      spec:
+        podSelector: {}
+        policyTypes:
+          - Ingress
+          - Egress
+        ingress:
+          - from:
+            - podSelector: {}
+        egress:
+          - to:
+            - podSelector: {}
+    - |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: allow-egress-mirror-site
+      spec:
+        podSelector: {}
+        policyTypes:
+          - Egress
+        egress:
+          - ports:
+              - port: 80
+                protocol: TCP
+              - port: 443
+                protocol: TCP
+            to:
+              - ipBlock:
+                  cidr: 162.105.120.100/32
+              - ipBlock:
+                  cidr: 115.27.161.81/32
+    - |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: allow-egress-public-80-443
+      spec:
+        podSelector: {}
+        policyTypes:
+          - Egress
+        egress:
+          - ports:
+              - port: 80
+                protocol: TCP
+              - port: 443
+                protocol: TCP
+              - port: 443
+                protocol: UDP # QUIC
+            to:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+                  except:
+                    - 10.0.0.0/8
+                    - 192.168.0.0/16
+                    - 172.16.0.0/12
+                    - 224.0.0.0/4
+                    - 255.255.255.255/32
+                    - 115.27.0.0/16
+                    - 162.105.0.0/16
+                    - 202.38.140.0/27
+                    - 202.112.7.0/24
+                    - 202.205.131.0/24
+                    - 211.68.72.0/21
+    - |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: allow-egress-github-22
+      spec:
+        podSelector: {}
+        policyTypes:
+          - Egress
+        egress:
+          - ports:
+              - port: 22
+                protocol: TCP
+            to:
+              - ipBlock:
+                  cidr: 192.30.252.0/22
+              - ipBlock:
+                  cidr: 185.199.108.0/22
+              - ipBlock:
+                  cidr: 140.82.112.0/20
+              - ipBlock:
+                  cidr: 143.55.64.0/20
+              - ipBlock:
+                  cidr: 20.201.28.151/32
+              - ipBlock:
+                  cidr: 20.205.243.166/32
+              - ipBlock:
+                  cidr: 20.87.245.0/32
+              - ipBlock:
+                  cidr: 4.237.22.38/32
+              - ipBlock:
+                  cidr: 20.207.73.82/32
+              - ipBlock:
+                  cidr: 20.27.177.113/32
+              - ipBlock:
+                  cidr: 20.200.245.247/32
+              - ipBlock:
+                  cidr: 20.175.192.147/32
+              - ipBlock:
+                  cidr: 20.233.83.145/32
+              - ipBlock:
+                  cidr: 20.29.134.23/32
+              - ipBlock:
+                  cidr: 20.199.39.232/32
+              - ipBlock:
+                  cidr: 20.217.135.5/32
+              - ipBlock:
+                  cidr: 4.225.11.198/32
+              - ipBlock:
+                  cidr: 4.208.26.197/32
+              - ipBlock:
+                  cidr: 20.26.156.215/32
+              - ipBlock:
+                  cidr: 20.201.28.152/32
+              - ipBlock:
+                  cidr: 20.205.243.160/32
+              - ipBlock:
+                  cidr: 20.87.245.4/32
+              - ipBlock:
+                  cidr: 4.237.22.40/32
+              - ipBlock:
+                  cidr: 20.207.73.83/32
+              - ipBlock:
+                  cidr: 20.27.177.118/32
+              - ipBlock:
+                  cidr: 20.200.245.248/32
+              - ipBlock:
+                  cidr: 20.175.192.146/32
+              - ipBlock:
+                  cidr: 20.233.83.149/32
+              - ipBlock:
+                  cidr: 20.29.134.19/32
+              - ipBlock:
+                  cidr: 20.199.39.227/32
+              - ipBlock:
+                  cidr: 20.217.135.4/32
+              - ipBlock:
+                  cidr: 4.225.11.200/32
+              - ipBlock:
+                  cidr: 4.208.26.198/32
+              - ipBlock:
+                  cidr: 20.26.156.214/32
 
 ---
 apiVersion: user-operator.lcpu.dev/v1alpha1

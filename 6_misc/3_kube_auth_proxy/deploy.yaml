@@ -108,7 +108,7 @@ spec:
       containers:
         - args:
             - -listen=:8080
-            - -storage=redis://redis:6379
+            - -storage=redis://redis-replication.redis-system.svc:6379/15
             - -oauth-callback=https://hpcgame.pku.edu.cn/kube/_/oauth/callback
             - -kubeconfig-template-path=/etc/kubeconfig-template/kubeconfig.tmpl
           command:
@@ -125,6 +125,7 @@ spec:
                   name: oauth-secrets
                   key: oauth-app-id
           image: crmirror.lcpu.dev/xtlsoft/kube-auth-proxy:v0.1.1
+          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               path: /healthz
@@ -205,70 +206,70 @@ data:
         user:
           token: {{ .Token }}
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app.kubernetes.io/name: kube-auth-proxy
-    control-plane: kube-auth-proxy-redis
-  name: redis
-  namespace: kube-auth-proxy-system
-spec:
-  ports:
-    - name: redis
-      port: 6379
-      protocol: TCP
-      targetPort: 6379
-  selector:
-    control-plane: kube-auth-proxy-redis
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app.kubernetes.io/name: kube-auth-proxy
+#     control-plane: kube-auth-proxy-redis
+#   name: redis
+#   namespace: kube-auth-proxy-system
+# spec:
+#   ports:
+#     - name: redis
+#       port: 6379
+#       protocol: TCP
+#       targetPort: 6379
+#   selector:
+#     control-plane: kube-auth-proxy-redis
 
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app.kubernetes.io/name: kube-auth-proxy
-    control-plane: kube-auth-proxy-redis
-  name: redis
-  namespace: kube-auth-proxy-system
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      control-plane: kube-auth-proxy-redis
-  template:
-    metadata:
-      annotations:
-        kubectl.kubernetes.io/default-container: redis
-      labels:
-        control-plane: kube-auth-proxy-redis
-    spec:
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - preference:
-                matchExpressions:
-                  - key: hpc.lcpu.dev/partition
-                    operator: In
-                    values:
-                      - x86_amd
-              weight: 1
-      containers:
-        - command:
-            - redis-server
-          image: redis:6.0.9
-          name: redis
-          resources:
-            limits:
-              cpu: "4"
-              memory: 16Gi
-            requests:
-              cpu: 100m
-              memory: 512Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-      terminationGracePeriodSeconds: 10
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   labels:
+#     app.kubernetes.io/name: kube-auth-proxy
+#     control-plane: kube-auth-proxy-redis
+#   name: redis
+#   namespace: kube-auth-proxy-system
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       control-plane: kube-auth-proxy-redis
+#   template:
+#     metadata:
+#       annotations:
+#         kubectl.kubernetes.io/default-container: redis
+#       labels:
+#         control-plane: kube-auth-proxy-redis
+#     spec:
+#       affinity:
+#         nodeAffinity:
+#           preferredDuringSchedulingIgnoredDuringExecution:
+#             - preference:
+#                 matchExpressions:
+#                   - key: hpc.lcpu.dev/partition
+#                     operator: In
+#                     values:
+#                       - x86_amd
+#               weight: 1
+#       containers:
+#         - command:
+#             - redis-server
+#           image: redis:6.0.9
+#           name: redis
+#           resources:
+#             limits:
+#               cpu: "4"
+#               memory: 16Gi
+#             requests:
+#               cpu: 100m
+#               memory: 512Mi
+#           securityContext:
+#             allowPrivilegeEscalation: false
+#             capabilities:
+#               drop:
+#                 - ALL
+#       terminationGracePeriodSeconds: 10

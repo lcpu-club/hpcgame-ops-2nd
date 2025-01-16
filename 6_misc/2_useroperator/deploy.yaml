@@ -328,9 +328,12 @@ spec:
             - --metrics-bind-address=:8443
             - --leader-elect
             - --health-probe-bind-address=:8081
+            - --custom-qps=300
+            - --custom-burst=450
           command:
             - /manager
           image: crmirror.lcpu.dev/xtlsoft/user-operator:v0.1.0
+          imagePullPolicy: Always
           livenessProbe:
             httpGet:
               path: /healthz

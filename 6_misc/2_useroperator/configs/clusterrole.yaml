@@ -19,7 +19,7 @@ rules:
 
   # Permissions for Jobs
   - apiGroups: ["batch"]
-    resources: ["jobs"]
+    resources: ["jobs", "cronjobs", "jobs/status", "cronjobs/status"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
   # Permissions for Services

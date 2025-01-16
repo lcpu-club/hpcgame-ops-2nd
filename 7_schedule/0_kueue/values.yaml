@@ -1,12 +1,12 @@
 # Default values for kueue.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-nameOverride: ""
-fullnameOverride: ""
+# nameOverride: ""
+# fullnameOverride: ""
 # Enable each function, like kustomize https://github.com/kubernetes-sigs/kueue/blob/main/config/default/kustomization.yaml
 enablePrometheus: false
 # Enable x509 automated certificate management using cert-manager (cert-manager.io)
-enableCertManager: false
+enableCertManager: true
 # Enable API Priority and Fairness configuration for the visibility API
 enableVisibilityAPF: false
 # Customize controllerManager
@@ -16,17 +16,17 @@ controllerManager:
   #    enabled: true
   manager:
     image:
-      repository: us-central1-docker.pkg.dev/k8s-staging-images/kueue/kueue
-      # This should be set to 'IfNotPresent' for released version      
-      pullPolicy: Always
-    podAnnotations: {}
+      repository: crmirror.lcpu.dev/us-central1-docker.pkg.dev/k8s-staging-images/kueue/kueue
+      # This should be set to 'IfNotPresent' for released version
+      pullPolicy: IfNotPresent
+    # podAnnotations: {}
     resources:
       limits:
         cpu: "2"
-        memory: 512Mi
+        memory: 2Gi
       requests:
-        cpu: 500m
-        memory: 512Mi
+        cpu: "1"
+        memory: 1Gi
     podSecurityContext:
       runAsNonRoot: true
       seccompProfile:
@@ -36,8 +36,8 @@ controllerManager:
       capabilities:
         drop:
           - ALL
-  replicas: 1
-  imagePullSecrets: []
+  replicas: 2
+  # imagePullSecrets: []
   readinessProbe:
     initialDelaySeconds: 5
     periodSeconds: 10
@@ -52,9 +52,9 @@ controllerManager:
     successThreshold: 1
   topologySpreadConstraints: []
   podDisruptionBudget:
-    enabled: false
+    enabled: true
     minAvailable: 1
-kubernetesClusterDomain: cluster.local
+kubernetesClusterDomain: hpc.lcpu.dev
 # controller_manager_config.yaml. controllerManager utilizes this yaml via manager-config Configmap.
 managerConfig:
   controllerManagerConfigYaml: |-
@@ -124,11 +124,11 @@ managerConfig:
     #fairSharing:
     #  enable: true
     #  preemptionStrategies: [LessThanOrEqualToFinalShare, LessThanInitialShare]
-    #resources:
-    #  excludeResourcePrefixes: []
-    # transformations:
-    # - input: nvidia.com/mig-4g.5gb
-    #   strategy: Replace | Retain
-    #   outputs:
-    #     example.com/accelerator-memory: 5Gi
-    #     example.com/accelerator-gpc: 4
+    resources:
+      excludeResourcePrefixes:
+        - rdma.hpc.lcpu.dev
+      transformations:
+        - input: nvidia.com/gpu
+          strategy: Retain
+          outputs:
+            hpc.lcpu.dev/gpu-count: "1"

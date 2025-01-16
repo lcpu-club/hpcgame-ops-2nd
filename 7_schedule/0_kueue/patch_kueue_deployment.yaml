@@ -1,0 +1,22 @@
+# need to patch the deployment
+# kubectl patch --patch-file ./patch_kueue_deployment.yaml deployment kueue-controller-manager -n kueue-system
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kueue-controller-manager
+  namespace: kueue-system
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: hpc.lcpu.dev/partition
+                    operator: In
+                    values:
+                      - control
+                      - x86_amd
+              weight: 1
