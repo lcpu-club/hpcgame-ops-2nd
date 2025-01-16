@@ -242,7 +242,7 @@ npu:
         memory: 4Gi
       podPidsLimit: 16384
 
-npu-inf:
+npu_inf:
   hosts:
     pku-arm-d01:
       ansible_host: 192.168.207.211
