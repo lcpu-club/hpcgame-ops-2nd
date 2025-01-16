@@ -5,5 +5,5 @@
   become: true
 
   tasks:
-    - name: 重启主机
+    - name: Reboot hosts
       reboot:
