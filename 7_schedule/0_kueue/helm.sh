@@ -1,0 +1,1 @@
+helm install kueue oci://us-central1-docker.pkg.dev/k8s-staging-images/charts/kueue --version="v0.10.0" --create-namespace --namespace=kueue-system -f values.yaml
