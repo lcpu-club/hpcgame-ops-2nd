@@ -10,6 +10,7 @@ data:
       migStrategy: none
     sharing:
       timeSlicing:
+        # renameByDefault: true # Renames all GPU to nvidia.com/gpu.shared
         resources:
         - name: nvidia.com/gpu
           replicas: 16

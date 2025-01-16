@@ -85,7 +85,7 @@ spec:
                     operator: In
                     values:
                       - npu
-                      - npu-inf
+                      - npu_inf
       serviceAccountName: ascend-device-plugin-sa-910
       containers:
         - image: crmirror.lcpu.dev/xtlsoft/ascend-device-plugin:6.0.0

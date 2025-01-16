@@ -21,3 +21,29 @@ allowedTopologies:
       - key: hpc.lcpu.dev/nfs-capable
         values:
           - "true"
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: yanyuan-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: 10.129.247.254
+  share: /mnt/nfs/pvs
+  # csi.storage.k8s.io/provisioner-secret is only needed for providing mountOptions in DeleteVolume
+  # csi.storage.k8s.io/provisioner-secret-name: "mount-options"
+  # csi.storage.k8s.io/provisioner-secret-namespace: "default"
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+mountOptions:
+  - nfsvers=4.2
+  - soft
+  - timeo=30
+  - retrans=2
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: topology.kubernetes.io/zone
+        values:
+          - "cn-bj-pku-main"

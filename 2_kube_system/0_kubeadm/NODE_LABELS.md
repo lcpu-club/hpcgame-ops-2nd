@@ -54,8 +54,11 @@ kubectl label node/l08c56n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/re
 kubectl label node/sc2 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/sc4 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 
-kubectl label node/pku-arm-a01 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
-kubectl label node/pku-arm-a02 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-a01 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main hpc.lcpu.dev/outdated=true
+kubectl label node/pku-arm-a02 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main hpc.lcpu.dev/outdated=true
+kubectl taint node pku-arm-a01 hpc.lcpu.dev/outdated=true:NoSchedule
+kubectl taint node pku-arm-a02 hpc.lcpu.dev/outdated=true:NoSchedule
+
 kubectl label node/pku-arm-b01 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/pku-arm-b02 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/pku-arm-b03 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
@@ -65,4 +68,10 @@ kubectl label node/pku-arm-b05 hpc.lcpu.dev/partition=arm topology.kubernetes.io
 kubectl label node/pku-arm-c01 hpc.lcpu.dev/partition=npu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/pku-arm-c02 hpc.lcpu.dev/partition=npu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/pku-arm-c03 hpc.lcpu.dev/partition=npu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+
+kubectl label node/pku-arm-d01 hpc.lcpu.dev/partition=npu_inf topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-d02 hpc.lcpu.dev/partition=npu_inf topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-d03 hpc.lcpu.dev/partition=npu_inf topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-d04 hpc.lcpu.dev/partition=npu_inf topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
+kubectl label node/pku-arm-d05 hpc.lcpu.dev/partition=npu_inf topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 ```

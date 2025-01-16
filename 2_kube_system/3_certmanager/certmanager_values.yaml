@@ -35,6 +35,15 @@ cainjector:
                 operator: In
                 values:
                   - control
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: hpc.lcpu.dev/partition
+              operator: In
+              values:
+                - control
 startupapicheck:
   tolerations:
     - key: node-role.kubernetes.io/master
@@ -50,3 +59,7 @@ startupapicheck:
                 operator: In
                 values:
                   - control
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1

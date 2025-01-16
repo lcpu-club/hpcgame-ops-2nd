@@ -22,6 +22,8 @@ spec:
           "openebs",
           "ot-operators",
           "redis-system",
+          "hpcgame-system",
+          "default",
         ]
       processes: ["*"]
     # - excludedNamespaces: ["audit-excluded-ns"]

@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hpcgame-system
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: minio-lb-daemonset
+  namespace: hpcgame-system
+  labels:
+    app: minio-lb
+spec:
+  selector:
+    matchLabels:
+      app: minio-lb
+  template:
+    metadata:
+      labels:
+        app: minio-lb
+    spec:
+      hostNetwork: true
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
+      containers:
+        - name: haproxy
+          image: haproxy:2.6
+          ports:
+            - containerPort: 19000
+              hostPort: 19000
+              protocol: TCP
+          volumeMounts:
+            - name: haproxy-config
+              mountPath: /usr/local/etc/haproxy/haproxy.cfg
+              subPath: haproxy.cfg
+      volumes:
+        - name: haproxy-config
+          configMap:
+            name: haproxy-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: haproxy-config
+  namespace: hpcgame-system
+data:
+  haproxy.cfg: |
+    global
+        log stdout format raw local0
+        maxconn 4096
+        daemon
+
+    defaults
+        log     global
+        mode    tcp
+        option  tcplog
+        timeout connect 5000ms
+        timeout client  50000ms
+        timeout server  50000ms
+
+    frontend minio_frontend
+        bind *:19000
+        default_backend minio_backend
+
+    backend minio_backend
+        balance roundrobin
+        option tcp-check
+        server minio1 10.129.247.101:9000 check
+        server minio2 10.129.247.102:9000 check
+        server minio3 10.129.247.103:9000 check
+        server minio4 10.129.247.104:9000 check
+        server minio5 10.129.247.105:9000 check

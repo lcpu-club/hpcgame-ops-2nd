@@ -6,4 +6,5 @@ driver:
   enabled: false
 
 toolkit:
-#   enabled: false
+  # enabled: false
+  enabled: true
