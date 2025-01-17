@@ -8,34 +8,92 @@ spec:
       hpcgame.pku.edu.cn/kind: judge
   cohort: "hpcgame"
   resourceGroups:
-    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu"]
+    resourceGroups:
+    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu", "huawei.com/Ascend910", "huawei.com/Ascend310P"]
       flavors:
         - name: "default-flavor"
           resources:
             - name: "cpu"
-              nominalQuota: 9
-              lendingLimit: 0
-              borrowingLimit: 10
+              nominalQuota: 256
             - name: "memory"
-              nominalQuota: 36Gi
-              lendingLimit: 0
-              borrowingLimit: 10Gi
+              nominalQuota: 384Gi
             - name: "pods"
-              nominalQuota: 5
-              lendingLimit: 0
-              borrowingLimit: 10
+              nominalQuota: 300
+        - name: "x86"
+          resources:
+            - name: "cpu"
+              nominalQuota: 256
+              borrowingLimit: 256
+            - name: "memory"
+              nominalQuota: 1024Gi
+              borrowingLimit: 1024Gi
+            - name: "pods"
+              nominalQuota: 512
+              borrowingLimit: 256
+
         - name: "gpu-a800"
           resources:
             - name: "nvidia.com/gpu"
-              nominalQuota: 2
-              lendingLimit: 0
+              nominalQuota: 3
               borrowingLimit: 1
+            - name: "memory"
+              nominalQuota: 350Gi
+              borrowingLimit: 150Gi
+
         - name: "gpu-l40"
           resources:
             - name: "nvidia.com/gpu"
-              nominalQuota: 2
-              lendingLimit: 0
+              nominalQuota: 3
               borrowingLimit: 1
+            - name: "memory"
+              nominalQuota: 350Gi
+              borrowingLimit: 150Gi
+
+        - name: "x86-amd"
+          resources:
+            - name: "cpu"
+              nominalQuota: 0
+              borrowingLimit: 64
+            - name: "memory"
+              nominalQuota: 0
+              borrowingLimit: 128Gi
+            - name: "nvidia.com/gpu"
+              nominalQuota: 0
+              borrowingLimit: 1
+
+        - name: "arm"
+          resources:
+            - name: "cpu"
+              nominalQuota: 80  # 2 sockets * 80 cores
+              borrowingLimit: 160
+            - name: "memory"
+              nominalQuota: 128Gi
+              borrowingLimit: 384Gi
+
+        - name: "npu"
+          resources:
+            - name: "cpu"
+              nominalQuota: 128  # 4 * 32 cores
+              borrowingLimit: 32
+            - name: "memory"
+              nominalQuota: 1024Gi
+              borrowingLimit: 1024Gi
+            - name: "huawei.com/Ascend910"
+              nominalQuota: 4
+              borrowingLimit: 4
+
+        - name: "npu-inf"
+          resources:
+            - name: "cpu"
+              nominalQuota: 64   # 2 * 32 cores
+              borrowingLimit: 64
+            - name: "memory"
+              nominalQuota: 256Gi
+              borrowingLimit: 256Gi
+            - name: "huawei.com/Ascend310P"
+              nominalQuota: 4    # 8 NPU cores
+              borrowingLimit: 4
+
 
 ---
 apiVersion: kueue.x-k8s.io/v1beta1
@@ -46,24 +104,91 @@ spec:
   namespaceSelector: {} # match all.
   cohort: "hpcgame"
   resourceGroups:
-    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu"]
+    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu", "huawei.com/Ascend910", "huawei.com/Ascend310P"]
       flavors:
         - name: "default-flavor"
           resources:
             - name: "cpu"
-              nominalQuota: 64
+              nominalQuota: 256
             - name: "memory"
-              nominalQuota: 128Gi
+              nominalQuota: 384Gi
             - name: "pods"
-              nominalQuota: 30
+              nominalQuota: 300
+        - name: "x86"
+          resources:
+            - name: "cpu"
+              nominalQuota: 512
+              borrowingLimit: 512
+            - name: "memory"
+              nominalQuota: 2048Gi
+              borrowingLimit: 2048Gi
+            - name: "pods"
+              nominalQuota: 1024
+              borrowingLimit: 1024
+
         - name: "gpu-a800"
           resources:
             - name: "nvidia.com/gpu"
-              nominalQuota: 4
+              nominalQuota: 5
+              borrowingLimit: 4
+            - name: "memory"
+              nominalQuota: 800Gi
+              borrowingLimit: 150Gi
+
         - name: "gpu-l40"
           resources:
             - name: "nvidia.com/gpu"
-              nominalQuota: 4
+              nominalQuota: 5
+              borrowingLimit: 4
+            - name: "memory"
+              nominalQuota: 800Gi
+              borrowingLimit: 150Gi
+
+        - name: "x86-amd"
+          resources:
+            - name: "cpu"
+              nominalQuota: 300
+              borrowingLimit: 64
+            - name: "memory"
+              nominalQuota: 800Gi
+              borrowingLimit: 400Gi
+            - name: "nvidia.com/gpu"
+              nominalQuota: 13
+              borrowingLimit: 1
+
+        - name: "arm"
+          resources:
+            - name: "cpu"
+              nominalQuota: 480  # 2 sockets * 80 cores
+              borrowingLimit: 160
+            - name: "memory"
+              nominalQuota: 768Gi
+              borrowingLimit: 128Gi
+
+        - name: "npu"
+          resources:
+            - name: "cpu"
+              nominalQuota: 384  # 4 * 32 cores
+              borrowingLimit: 96
+            - name: "memory"
+              nominalQuota: 3072Gi
+              borrowingLimit: 2048Gi
+            - name: "huawei.com/Ascend910"
+              nominalQuota: 12
+              borrowingLimit: 8
+
+        - name: "npu-inf"
+          resources:
+            - name: "cpu"
+              nominalQuota: 192   # 2 * 32 cores
+              borrowingLimit: 192
+            - name: "memory"
+              nominalQuota: 768Gi
+              borrowingLimit: 768Gi
+            - name: "huawei.com/Ascend310P"
+              nominalQuota: 16    # 8 NPU cores
+              borrowingLimit: 16
+
 
 ---
 # DON'T APPLY THIS, THIS IS FOR COMPETITORS!!!
@@ -77,7 +202,7 @@ spec:
       kubernetes.io/metadata.name: u-xxxxx # Only allow some user to use
   cohort: "hpcgame"
   resourceGroups:
-    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu"]
+    - coveredResources: ["cpu", "memory", "pods", "nvidia.com/gpu", "huawei.com/Ascend910", "huawei.com/Ascend310P"]
       flavors:
         - name: "default-flavor"
           resources:
@@ -90,13 +215,77 @@ spec:
             - name: "pods"
               nominalQuota: 0
               borrowingLimit: 2
+        - name: "x86"
+          resources:
+            - name: "cpu"
+              nominalQuota: 4
+              borrowingLimit: 64
+            - name: "memory"
+              nominalQuota: 16Gi
+              borrowingLimit: 256Gi
+            - name: "pods"
+              nominalQuota: 10
+              borrowingLimit: 10
         - name: "gpu-a800"
           resources:
             - name: "nvidia.com/gpu"
               nominalQuota: 0
               borrowingLimit: 1
+            - name: "memory"
+              nominalQuota: 64Gi
+              borrowingLimit: 64Gi
+
         - name: "gpu-l40"
           resources:
             - name: "nvidia.com/gpu"
               nominalQuota: 0
               borrowingLimit: 1
+            - name: "memory"
+              nominalQuota: 64Gi
+              borrowingLimit: 64Gi
+
+        - name: "x86-amd"
+          resources:
+            - name: "cpu"
+              nominalQuota: 3
+              borrowingLimit: 2
+            - name: "memory"
+              nominalQuota: 6Gi
+              borrowingLimit: 8Gi
+            - name: "nvidia.com/gpu"
+              nominalQuota: 0
+              borrowingLimit: 1
+
+        - name: "arm"
+          resources:
+            - name: "cpu"
+              nominalQuota: 4  # 2 sockets * 80 cores
+              borrowingLimit: 16
+            - name: "memory"
+              nominalQuota: 8Gi
+              borrowingLimit: 16Gi
+
+        - name: "npu"
+          resources:
+            - name: "cpu"
+              nominalQuota: 0  # 4 * 32 cores
+              borrowingLimit: 12
+            - name: "memory"
+              nominalQuota: 0Gi
+              borrowingLimit: 128Gi
+            - name: "huawei.com/Ascend910"
+              nominalQuota: 0
+              borrowingLimit: 1
+
+        - name: "npu-inf"
+          resources:
+            - name: "cpu"
+              nominalQuota: 0   # 2 * 32 cores
+              borrowingLimit: 8
+            - name: "memory"
+              nominalQuota: 0Gi
+              borrowingLimit: 64Gi
+            - name: "huawei.com/Ascend310P"
+              nominalQuota: 0    # 8 NPU cores
+              borrowingLimit: 1
+
