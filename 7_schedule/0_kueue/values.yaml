@@ -11,7 +11,9 @@ enableCertManager: false # IT HAS BUGS!!??
 enableVisibilityAPF: false
 # Customize controllerManager
 controllerManager:
-  #featureGates:
+  featureGates:
+    - name: LocalQueueDefaulting
+      enabled: true
   #  - name: PartialAdmission
   #    enabled: true
   manager:

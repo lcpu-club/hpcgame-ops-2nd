@@ -54,6 +54,13 @@ kubectl label node/l08c56n4 hpc.lcpu.dev/partition=x86 topology.kubernetes.io/re
 kubectl label node/sc2 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 kubectl label node/sc4 hpc.lcpu.dev/partition=x86_amd topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main
 
+kubectl label node/l12gpu11 hpc.lcpu.dev/partition=gpu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l12gpu12 hpc.lcpu.dev/partition=gpu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l12gpu13 hpc.lcpu.dev/partition=gpu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l12gpu23 hpc.lcpu.dev/partition=gpu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l12gpu25 hpc.lcpu.dev/partition=gpu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+kubectl label node/l12gpu26 hpc.lcpu.dev/partition=gpu topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-wm2 hpc.lcpu.dev/nfs-capable=true
+
 kubectl label node/pku-arm-a01 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main hpc.lcpu.dev/outdated=true
 kubectl label node/pku-arm-a02 hpc.lcpu.dev/partition=arm topology.kubernetes.io/region=cn-bj-pku topology.kubernetes.io/zone=cn-bj-pku-main hpc.lcpu.dev/outdated=true
 kubectl taint node pku-arm-a01 hpc.lcpu.dev/outdated=true:NoSchedule

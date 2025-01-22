@@ -1,6 +1,15 @@
 apiVersion: kueue.x-k8s.io/v1beta1
 kind: ResourceFlavor
 metadata:
+  name: "default-flavor"
+# Empty spec matches all nodes.
+# Suitable for not flavored resources.
+spec: {}
+
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ResourceFlavor
+metadata:
   name: "x86"
 spec:
   nodeLabels:
@@ -13,7 +22,25 @@ metadata:
   name: "gpu-a800"
 spec:
   nodeLabels:
-    nvidia.com/gpu-product: NVIDIA-A800-80GB-PCIe
+    nvidia.com/gpu.product: NVIDIA-A800-80GB-PCIe-MIG-2g.20gb
+
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ResourceFlavor
+metadata:
+  name: "gpu-a800-shared"
+spec:
+  nodeLabels:
+    nvidia.com/gpu.product: NVIDIA-A800-80GB-PCIe-MIG-2g.20gb-SHARED
+
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ResourceFlavor
+metadata:
+  name: "gpu-l40-shared"
+spec:
+  nodeLabels:
+    nvidia.com/gpu.product: NVIDIA-L40-SHARED
 
 ---
 apiVersion: kueue.x-k8s.io/v1beta1
@@ -22,7 +49,7 @@ metadata:
   name: "gpu-l40"
 spec:
   nodeLabels:
-    nvidia.com/gpu-product: NVIDIA-L40-40GB-PCIe
+    nvidia.com/gpu.product: NVIDIA-L40
 
 ---
 apiVersion: kueue.x-k8s.io/v1beta1

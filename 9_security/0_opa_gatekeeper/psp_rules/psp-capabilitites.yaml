@@ -23,4 +23,6 @@ spec:
       - SETPCAP
       - SETUID
       - SYS_CHROOT
+      - SYS_PTRACE
+      - IPC_LOCK
     # requiredDropCapabilities: ["must_drop"]

@@ -17,6 +17,7 @@ spec:
           # pod-security.kubernetes.io/enforce: baseline
           ssh-operator.lcpu.dev/inject: conditional
           lxcfs.lcpu.dev/inject: enabled
+          kueue.x-k8s.io/managed-namespace: "true"
 
 ---
 apiVersion: user-operator.lcpu.dev/v1alpha1
@@ -41,6 +42,9 @@ spec:
       subjects:
         - kind: User
           name: {{ .Username }}
+        - kind: ServiceAccount
+          name: default
+          namespace: {{ .Namespace }}
 
 ---
 apiVersion: user-operator.lcpu.dev/v1alpha1
@@ -101,6 +105,34 @@ spec:
                 podSelector:
                   matchLabels:
                     k8s-app: kube-dns
+    - |
+      apiVersion: "cilium.io/v2"
+      kind: CiliumNetworkPolicy
+      metadata:
+        name: "allow-to-kube-apiserver"
+      spec:
+        endpointSelector: {}
+        egress:
+          - toEntities:
+            - kube-apiserver
+    - |
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: allow-painter-service
+      spec:
+        podSelector: {}
+        policyTypes:
+          - Egress
+        egress:
+          - ports:
+              - port: 23334
+                protocol: TCP
+            to:
+              - namespaceSelector: {}
+                podSelector:
+                  matchLabels:
+                    app-name: painter
     - |
       apiVersion: networking.k8s.io/v1
       kind: NetworkPolicy
@@ -268,11 +300,7 @@ spec:
       metadata:
         name: default-resource-quota
       spec:
-        hard:
-          requests.cpu: "1"
-          requests.memory: 1Gi
-          limits.cpu: "2"
-          limits.memory: 2Gi
+        hard: {}
     - |
       apiVersion: v1
       kind: LimitRange
@@ -281,9 +309,46 @@ spec:
       spec:
         limits:
           - default:
-              cpu: 500m
-              memory: 500Mi
+              cpu: 1
+              memory: 1Gi
+              nvidia.com/gpu: 0
+              huawei.com/Ascend910: 0
+              huawei.com/Ascend310P: 0
             defaultRequest:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 150m
+              memory: 128Mi
+              nvidia.com/gpu: 0
+              huawei.com/Ascend910: 0
+              huawei.com/Ascend310P: 0
+            max:
+              cpu: 64
+              memory: 256Gi
+              nvidia.com/gpu: 4
+              huawei.com/Ascend910: 8
+              huawei.com/Ascend310P: 8
+            min:
+              cpu: 10m
+              memory: 1Mi
+              nvidia.com/gpu: 0
+              huawei.com/Ascend910: 0
+              huawei.com/Ascend310P: 0
             type: Container
+
+---
+apiVersion: user-operator.lcpu.dev/v1alpha1
+kind: UserCreationConfig
+metadata:
+  labels:
+    app.kubernetes.io/name: user-operator
+  name: localqueue
+spec:
+  enabled: true
+  resources:
+    - |
+      apiVersion: kueue.x-k8s.io/v1beta1
+      kind: LocalQueue
+      metadata:
+        name: default
+        namespace: {{ .Namespace }}
+      spec:
+        clusterQueue: default-queue # OK

@@ -46,6 +46,16 @@ data:
   a100-80gb-shared: |-
     version: v1
     flags:
+      migStrategy: single
+    sharing:
+      timeSlicing:
+        resources:
+        - name: nvidia.com/gpu
+          replicas: 6
+
+  l40-shared: |-
+    version: v1
+    flags:
       migStrategy: none
     sharing:
       timeSlicing:
@@ -55,3 +65,5 @@ data:
 
   a100-80gb: |-
     version: v1
+    flags:
+      migStrategy: single

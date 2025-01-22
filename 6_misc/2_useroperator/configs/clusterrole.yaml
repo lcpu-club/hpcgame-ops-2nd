@@ -38,8 +38,8 @@ rules:
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
   # Permissions for JobSet (kueue API group)
-  - apiGroups: ["kueue.x-k8s.io"]
-    resources: ["jobsets"]
+  - apiGroups: ["jobset.x-k8s.io"]
+    resources: ["jobsets", "jobsets/status"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
   # Permissions for sshkeypair (ssh-operator.lcpu.dev/v1alpha1)
@@ -72,6 +72,21 @@ rules:
     resources: ["resourcequotas", "limitranges"]
     verbs: ["get", "list", "watch"]
 
+  # Permissions for Workloads and LocalQueues
+  - apiGroups: ["kueue.x-k8s.io"]
+    resources: ["workloads", "localqueues"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+  # Permissions for ClusterQueues
+  - apiGroups: ["kueue.x-k8s.io"]
+    resources: ["clusterqueues"]
+    verbs: ["get", "list", "watch"]
+
+  # Permissions to list nodes
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -81,6 +96,26 @@ rules:
   # Permissions for Namespaces
   - apiGroups: [""]
     resources: ["namespaces"]
+    verbs: ["get", "list", "watch"]
+
+  # Permissions for ClusterQueues
+  - apiGroups: ["kueue.x-k8s.io"]
+    resources: ["clusterqueues"]
+    verbs: ["get", "list", "watch"]
+
+  # Permissions for StorageClass
+  - apiGroups: ["storage.k8s.io"]
+    resources: ["storageclasses"]
+    verbs: ["get", "list", "watch"]
+
+  # Permissions for nodes
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+
+  # Permission for NetworkAttachmentDefinitions
+  - apiGroups: ["k8s.cni.cncf.io"]
+    resources: ["network-attachment-definitions"]
     verbs: ["get", "list", "watch"]
 
 ---
