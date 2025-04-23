@@ -24,6 +24,7 @@ spec:
           "redis-system",
           "jobset-system",
           "hpcgame-system",
+          "amd-gpu-system",
           "default",
         ]
       processes: ["*"]
