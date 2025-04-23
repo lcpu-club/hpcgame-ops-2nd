@@ -29,6 +29,7 @@ spec:
         - nvidia.com/gpu
         - huawei.com/Ascend910
         - huawei.com/Ascend310P
+        - amd.com/gpu
       flavors:
         - name: "x86"
           resources:
@@ -49,6 +50,10 @@ spec:
               lendingLimit: 0
               borrowingLimit: 0
             - name: "huawei.com/Ascend310P"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
+            - name: "amd.com/gpu"
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
@@ -75,6 +80,10 @@ spec:
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
 
         - name: "gpu-l40"
           resources:
@@ -95,6 +104,10 @@ spec:
               lendingLimit: 0
               borrowingLimit: 0
             - name: "huawei.com/Ascend310P"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
+            - name: "amd.com/gpu"
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
@@ -121,6 +134,10 @@ spec:
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
 
         - name: "gpu-l40-shared"
           resources:
@@ -141,6 +158,10 @@ spec:
               lendingLimit: 0
               borrowingLimit: 0
             - name: "huawei.com/Ascend310P"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
+            - name: "amd.com/gpu"
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
@@ -167,6 +188,10 @@ spec:
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 8
 
         - name: "arm"
           resources:
@@ -187,6 +212,10 @@ spec:
               lendingLimit: 0
               borrowingLimit: 0
             - name: "huawei.com/Ascend310P"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
+            - name: "amd.com/gpu"
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
@@ -213,6 +242,10 @@ spec:
               nominalQuota: 0
               lendingLimit: 0
               borrowingLimit: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
 
         - name: "npu-inf"
           resources:
@@ -236,6 +269,10 @@ spec:
               nominalQuota: 4
               lendingLimit: 0
               borrowingLimit: 4
+            - name: "amd.com/gpu"
+              nominalQuota: 0
+              lendingLimit: 0
+              borrowingLimit: 0
 
 ---
 apiVersion: kueue.x-k8s.io/v1beta1
@@ -265,6 +302,7 @@ spec:
           "nvidia.com/gpu",
           "huawei.com/Ascend910",
           "huawei.com/Ascend310P",
+          "amd.com/gpu",
         ]
       flavors:
         - name: "x86"
@@ -279,6 +317,8 @@ spec:
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
               nominalQuota: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
 
         - name: "gpu-a800"
           resources:
@@ -291,6 +331,8 @@ spec:
             - name: "huawei.com/Ascend910"
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
+              nominalQuota: 0
+            - name: "amd.com/gpu"
               nominalQuota: 0
 
         - name: "gpu-l40"
@@ -305,6 +347,8 @@ spec:
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
               nominalQuota: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
 
         - name: "gpu-a800-shared"
           resources:
@@ -317,6 +361,8 @@ spec:
             - name: "huawei.com/Ascend910"
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
+              nominalQuota: 0
+            - name: "amd.com/gpu"
               nominalQuota: 0
 
         - name: "gpu-l40-shared"
@@ -331,6 +377,8 @@ spec:
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
               nominalQuota: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
 
         - name: "x86-amd"
           resources:
@@ -339,11 +387,13 @@ spec:
             - name: "memory"
               nominalQuota: 1450Gi
             - name: "nvidia.com/gpu"
-              nominalQuota: 120
+              nominalQuota: 0
             - name: "huawei.com/Ascend910"
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
               nominalQuota: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 8
 
         - name: "arm"
           resources:
@@ -356,6 +406,8 @@ spec:
             - name: "huawei.com/Ascend910"
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
+              nominalQuota: 0
+            - name: "amd.com/gpu"
               nominalQuota: 0
 
         - name: "npu"
@@ -370,6 +422,8 @@ spec:
               nominalQuota: 12
             - name: "huawei.com/Ascend310P"
               nominalQuota: 0
+            - name: "amd.com/gpu"
+              nominalQuota: 0
 
         - name: "npu-inf"
           resources:
@@ -383,6 +437,8 @@ spec:
               nominalQuota: 0
             - name: "huawei.com/Ascend310P"
               nominalQuota: 16 # 8 NPU cores
+            - name: "amd.com/gpu"
+              nominalQuota: 0
 
 # ---
 # # DON'T APPLY THIS, THIS IS FOR COMPETITORS!!!
