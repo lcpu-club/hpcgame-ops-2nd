@@ -1,0 +1,122 @@
+# NFD related configs
+node-feature-discovery:
+  # -- Set to true/false to enable/disable the installation of node feature discovery (NFD) operator
+  enabled: true
+  worker:
+    tolerations:
+      - key: "amd-dcm"
+        operator: "Equal"
+        value: "up"
+        effect: "NoExecute"
+
+# KMM related configs
+kmm:
+  enabled: true
+  controller:
+    manager:
+      image:
+        repository: "crmirror.lcpu.dev/docker.io/rocm/kernel-module-management-operator"
+        tag: "v1.2.0"
+      env:
+        relatedImageBuild: "crmirror.lcpu.dev/gcr.io/kaniko-project/executor:v1.23.2"
+        relatedImageSign: "crmirror.lcpu.dev/docker.io/rocm/kernel-module-management-signimage:v1.2.0"
+        relatedImageWorker: "crmirror.lcpu.dev/docker.io/rocm/kernel-module-management-worker:v1.2.0"
+  webhookServer:
+    webhookServer:
+      image:
+        repository: "crmirror.lcpu.dev/docker.io/rocm/kernel-module-management-webhook-server"
+        tag: "v1.2.0"
+
+# -- Default NFD rule will detect amd gpu based on pci vendor ID
+installdefaultNFDRule: true
+
+# -- CRD will be patched as pre-upgrade/pre-rollback hook when doing helm upgrade/rollback to current helm chart
+upgradeCRD: true
+
+# AMD GPU operator controller related configs
+controllerManager:
+  manager:
+    args:
+    - --config=controller_manager_config.yaml
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+    image:
+      # -- AMD GPU operator controller manager image repository
+      repository: crmirror.lcpu.dev/rocm/gpu-operator
+      # -- AMD GPU operator controller manager image tag
+      tag: dev
+    # -- Image pull policy for AMD GPU operator controller manager pod
+    imagePullPolicy: Always
+    # -- Image pull secret name for pulling AMD GPU operator controller manager image if registry needs credential to pull image
+    imagePullSecrets: ""
+    tolerations:
+    - key: "node-role.kubernetes.io/master"
+      operator: "Equal"
+      value: ""
+      effect: "NoSchedule"
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Equal"
+      value: ""
+      effect: "NoSchedule"
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+  # -- Node selector for AMD GPU operator controller manager deployment
+  nodeSelector: {}
+  # -- Deployment affinity configs for controller manager
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+  replicas: 1
+  serviceAccount:
+    annotations: {}
+  env:
+    simEnable: false
+kmmDevicePlugin:
+  serviceAccount:
+    annotations: {}
+kmmModuleLoader:
+  serviceAccount:
+    annotations: {}
+kubernetesClusterDomain: cluster.local
+managerConfig:
+  controllerManagerConfigYaml: |-
+    healthProbeBindAddress: :8081
+    metricsBindAddress: 127.0.0.1:8080
+    leaderElection:
+      enabled: true
+      resourceID: gpu.amd.com
+metricsService:
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: https
+  type: ClusterIP
+nodeLabeller:
+  serviceAccount:
+    annotations: {}
+metricsExporter:
+  serviceAccount:
+    annotations: {}
+testRunner:
+  serviceAccount:
+    annotations: {}
+configManager:
+  serviceAccount:
+    annotations: {}
+utilsContainer:
+  serviceAccount:
+    annotations: {}
+global:
+  proxy:
+    env: {}
