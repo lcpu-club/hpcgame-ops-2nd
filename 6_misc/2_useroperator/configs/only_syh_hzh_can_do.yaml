@@ -1,0 +1,58 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-painter-service-demo
+  namespace: u-88b90722-7793-4270-8f0e-cc8586bbe7e9
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - port: 23333
+          protocol: TCP
+      to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app-name: painter
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-painter-service-demo
+  namespace: u-560a8c68-cda1-4783-a293-1378f427cce3
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - port: 23333
+          protocol: TCP
+      to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app-name: painter
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-painter-service-demo
+  namespace: u-ab3e3794-4280-421c-8721-cdd4304a8669
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - port: 23333
+          protocol: TCP
+      to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app-name: painter

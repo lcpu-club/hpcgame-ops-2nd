@@ -309,9 +309,9 @@ spec:
         - name: "gpu-a800-shared"
           resources:
             - name: "cpu"
-              nominalQuota: 64
+              nominalQuota: 288
             - name: "memory"
-              nominalQuota: 512Gi
+              nominalQuota: 1024Gi
             - name: "nvidia.com/gpu"
               nominalQuota: 72
             - name: "huawei.com/Ascend910"
@@ -335,9 +335,9 @@ spec:
         - name: "x86-amd"
           resources:
             - name: "cpu"
-              nominalQuota: 512
+              nominalQuota: 768
             - name: "memory"
-              nominalQuota: 1350Gi
+              nominalQuota: 1450Gi
             - name: "nvidia.com/gpu"
               nominalQuota: 120
             - name: "huawei.com/Ascend910"

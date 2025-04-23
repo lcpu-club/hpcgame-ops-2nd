@@ -12,3 +12,7 @@ spec:
       # - readOnly: true
       #   pathPrefix: "/foo"
       - pathPrefix: "/var/lib/lxcfs"
+      - readOnly: true
+        pathPrefix: "/usr/local/Ascend/driver"
+      - readOnly: true
+        pathPrefix: "/etc/ascend_install.info"

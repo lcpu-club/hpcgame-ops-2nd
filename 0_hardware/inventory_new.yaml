@@ -24,10 +24,11 @@ control:
 ### Partition: x86_amd ###
 x86_amd:
   hosts:
-    sc2:
-      ansible_host: 192.168.208.2
-    sc4:
-      ansible_host: 192.168.208.4
+    {}
+    # sc2:
+    #   ansible_host: 192.168.208.2
+    # sc4:
+    #   ansible_host: 192.168.208.4
   vars:
     extra_kubelet_config: |
       cpuManagerPolicy: none
@@ -167,30 +168,31 @@ x86:
 ### Partition: gpu ###
 gpu:
   hosts:
-    l12gpu11:
-      ansible_host: 192.168.206.201
-      internal_ip: 192.168.52.1
-      roce_vxlan_ip: 10.234.0.201
-    l12gpu12:
-      ansible_host: 192.168.206.202
-      internal_ip: 192.168.52.2
-      roce_vxlan_ip: 10.234.0.202
-    l12gpu13:
-      ansible_host: 192.168.206.203
-      internal_ip: 192.168.52.3
-      roce_vxlan_ip: 10.234.0.203
-    l12gpu23:
-      ansible_host: 192.168.206.204
-      internal_ip: 192.168.52.4
-      roce_vxlan_ip: 10.234.0.204
-    l12gpu25:
-      ansible_host: 192.168.206.205
-      internal_ip: 192.168.52.5
-      roce_vxlan_ip: 10.234.0.205
-    l12gpu26:
-      ansible_host: 192.168.206.206
-      internal_ip: 192.168.52.6
-      roce_vxlan_ip: 10.234.0.206
+    {}
+    # l12gpu11:
+    #   ansible_host: 192.168.206.201
+    #   internal_ip: 192.168.52.1
+    #   roce_vxlan_ip: 10.234.0.201
+    # l12gpu12:
+    #   ansible_host: 192.168.206.202
+    #   internal_ip: 192.168.52.2
+    #   roce_vxlan_ip: 10.234.0.202
+    # l12gpu13:
+    #   ansible_host: 192.168.206.203
+    #   internal_ip: 192.168.52.3
+    #   roce_vxlan_ip: 10.234.0.203
+    # l12gpu23:
+    #   ansible_host: 192.168.206.204
+    #   internal_ip: 192.168.52.4
+    #   roce_vxlan_ip: 10.234.0.204
+    # l12gpu25:
+    #   ansible_host: 192.168.206.205
+    #   internal_ip: 192.168.52.5
+    #   roce_vxlan_ip: 10.234.0.205
+    # l12gpu26:
+    #   ansible_host: 192.168.206.206
+    #   internal_ip: 192.168.52.6
+    #   roce_vxlan_ip: 10.234.0.206
   vars:
     roce_dev: eno3np0
     extra_kubelet_config: |
@@ -203,20 +205,21 @@ gpu:
 ### Partition: arm ###
 arm:
   hosts:
-    pku-arm-a01:
-      ansible_host: 192.168.207.101
-    pku-arm-a02:
-      ansible_host: 192.168.207.102
-    pku-arm-b01:
-      ansible_host: 192.168.207.111
-    pku-arm-b02:
-      ansible_host: 192.168.207.112
-    pku-arm-b03:
-      ansible_host: 192.168.207.113
-    pku-arm-b04:
-      ansible_host: 192.168.207.114
-    pku-arm-b05:
-      ansible_host: 192.168.207.115
+    {}
+    # pku-arm-a01:
+    #   ansible_host: 192.168.207.101
+    # pku-arm-a02:
+    #   ansible_host: 192.168.207.102
+    # pku-arm-b01:
+    #   ansible_host: 192.168.207.111
+    # pku-arm-b02:
+    #   ansible_host: 192.168.207.112
+    # pku-arm-b03:
+    #   ansible_host: 192.168.207.113
+    # pku-arm-b04:
+    #   ansible_host: 192.168.207.114
+    # pku-arm-b05:
+    #   ansible_host: 192.168.207.115
   vars:
     extra_kubelet_config: |
       cpuManagerPolicy: static
@@ -228,12 +231,13 @@ arm:
 ### Partition: npu ###
 npu:
   hosts:
-    pku-arm-c01:
-      ansible_host: 192.168.207.201
-    pku-arm-c02:
-      ansible_host: 192.168.207.202
-    pku-arm-c03:
-      ansible_host: 192.168.207.203
+    {}
+    # pku-arm-c01:
+    #   ansible_host: 192.168.207.201
+    # pku-arm-c02:
+    #   ansible_host: 192.168.207.202
+    # pku-arm-c03:
+    #   ansible_host: 192.168.207.203
   vars:
     extra_kubelet_config: |
       cpuManagerPolicy: static
@@ -244,16 +248,17 @@ npu:
 
 npu_inf:
   hosts:
-    pku-arm-d01:
-      ansible_host: 192.168.207.211
-    pku-arm-d02:
-      ansible_host: 192.168.207.212
-    pku-arm-d03:
-      ansible_host: 192.168.207.213
-    pku-arm-d04:
-      ansible_host: 192.168.207.214
-    pku-arm-d05:
-      ansible_host: 192.168.207.215
+    {}
+    # pku-arm-d01:
+    #   ansible_host: 192.168.207.211
+    # pku-arm-d02:
+    #   ansible_host: 192.168.207.212
+    # pku-arm-d03:
+    #   ansible_host: 192.168.207.213
+    # pku-arm-d04:
+    #   ansible_host: 192.168.207.214
+    # pku-arm-d05:
+    #   ansible_host: 192.168.207.215
   vars:
     extra_kubelet_config: |
       cpuManagerPolicy: static
@@ -276,9 +281,4 @@ all_nodes:
 ### All Except Control ###
 all_noctrl:
   children:
-    # x86_amd:
     x86:
-    # gpu:
-    # arm:
-    # npu:
-    # npu_inf:

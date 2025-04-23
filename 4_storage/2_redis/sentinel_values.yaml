@@ -10,7 +10,8 @@ affinity:
             - key: hpc.lcpu.dev/partition
               operator: In
               values:
-                - x86_amd
+                # - x86_amd
+                - x86
         weight: 1
 
 redisExporter:

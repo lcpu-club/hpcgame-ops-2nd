@@ -27,13 +27,15 @@ priorityClassName: system-cluster-critical
 
 affinity:
   nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - preference:
+          matchExpressions:
             - key: hpc.lcpu.dev/partition
               operator: In
               values:
-                - x86_amd
+                - x86
+                # - x86_amd
+        weight: 1
 
 pdb:
   enabled: true
@@ -42,11 +44,12 @@ pdb:
 storageSpec:
   volumeClaimTemplate:
     spec:
-      storageClassName: x86-amd-local-hostpath
+      # storageClassName: x86-amd-local-hostpath
+      storageClassName: openebs-hostpath
       accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: 192Gi
+          storage: 64Gi
 
 externalConfig:
   enabled: true

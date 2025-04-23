@@ -126,7 +126,7 @@ spec:
           - Egress
         egress:
           - ports:
-              - port: 23334
+              - port: 23333
                 protocol: TCP
             to:
               - namespaceSelector: {}

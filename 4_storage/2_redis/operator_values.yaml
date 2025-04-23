@@ -15,4 +15,5 @@ affinity:
               values:
                 - control
                 - x86_amd
+                - x86
         weight: 1
